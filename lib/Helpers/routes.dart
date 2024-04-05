@@ -1,9 +1,14 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/categoryscreen.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/petcategoryscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/allpetfavouitescreen.dart';
+import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/allpetscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/petdetailsscreen.dart';
+import 'package:pet_adoption_carmel/screens/ViewEventScreen/pages/eventscreen.dart';
+import 'package:pet_adoption_carmel/screens/ViewEventScreen/pages/peteventdetailsscreen.dart';
 import 'package:pet_adoption_carmel/screens/ViewOrdersScreen/pages/myordersscreen.dart';
 
 
@@ -15,9 +20,16 @@ var customRoutes = <String, WidgetBuilder>{
       id: id,
     );
   },
-  'all_favourites_screen':(context) => AllFavouritesScreen(),
+ 'event_details_screen': (context) {
+    String id = ModalRoute.of(context)!.settings.arguments.toString();
+    return EventDetailsScreen(
+      id: id,
+    );
+  },
+  'all_favourites_screen':(context) => PetFavouritePage(),
   'all_category_screen':(context) => CategoryScreen(),
   'all_orders_screen':(context) => MyOrdersScreen(),
+   'event_screen':(context)=>EventScreen(),
    'all_categoryproduct_screen': (context) {
     var data = ModalRoute.of(context)!.settings.arguments;
     if (data is String) {

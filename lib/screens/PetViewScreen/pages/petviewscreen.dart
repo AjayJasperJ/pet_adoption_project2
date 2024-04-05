@@ -5,13 +5,17 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:pet_adoption_carmel/ExtraScreens/loadingscreen.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigtionprovider.dart';
+import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/categoryscreen.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/provider/categoryprovider.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/widgets/frontcategorywidget.dart';
 import 'package:pet_adoption_carmel/screens/LoginScreen/loginscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/widgets/petwidget.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/supportscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
+import 'package:pet_adoption_carmel/screens/ViewEventScreen/pages/eventscreen.dart';
 import 'package:pet_adoption_carmel/screens/ViewOrdersScreen/pages/myordersscreen.dart';
 
 import 'package:provider/provider.dart';
@@ -46,6 +50,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
     final pet = Provider.of<PetProvider>(context);
     final category=Provider.of<CategoryProvider>(context);
     final navigation=Provider.of<BottomNavigationBarProvider>(context);
+    final userprovider=Provider.of<UserProvider>(context,listen: false);
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -63,10 +68,11 @@ class _PetViewScreenState extends State<PetViewScreen> {
                   fontSize: 18),
             ),
           
-           Consumer<UserProvider>(builder: (context, value, child) {
+          Consumer<UserProvider>(builder: (context, value, child) {
                 String userAddress = "";
                 for (var i = 0; i < value.users.length; i++) {
                   userAddress = value.users[i].address;
+                  print(userAddress+'vvvvvvvvv');
                 }
                 return Text(
                   '$userAddress , India',
@@ -112,24 +118,23 @@ class _PetViewScreenState extends State<PetViewScreen> {
               leading:  Icon(IconlyBold.home,color: purpleColor,),
               title: const Text('Dashboard',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
               onTap: () {
-                navigation.currentIndex=0;
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => const PetViewScreen()));
-              },
-            ),
-             ListTile(
-              leading: Icon(IconlyBold.shieldDone,color: purpleColor,),
-              title: Text('Adoption',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-            ),
-            ListTile(
-              leading: Icon(IconlyBold.addUser,color: purpleColor,),
-              title: const Text('Pet Adoption Evnent',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-              onTap: () {
                
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PetViewScreen()));
               },
             ),
+             InkWell(
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>const CategoryScreen()));
+              },
+               child: ListTile(
+                leading: Icon(Icons.pets,color: purpleColor,),
+                title: Text('Categories',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                           ),
+             ), 
+           
           InkWell(
               onTap: () {
                 Navigator.push(context,MaterialPageRoute(builder:(context)=>const PetFavouritePage()));
@@ -141,23 +146,33 @@ class _PetViewScreenState extends State<PetViewScreen> {
              ),
              InkWell(
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder:(context)=>const MyOrdersScreen()));
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>const EventScreen()));
               },
                child: ListTile(
                 leading: Icon(IconlyBold.paper,color: purpleColor,),
-                title: Text('My Orders',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                title: Text('Pet Events',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
-             ListTile(
-              leading: Icon(IconlyBold.message,color: purpleColor,),
-              title: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-            ),
-            ListTile(
-              leading:  Icon(IconlyBold.profile,color: purpleColor,),
-              title: const Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-              onTap: () {
-            
+             InkWell(
+                onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>const SupportScreen()));
               },
+               child: ListTile(
+                leading: Icon(IconlyBold.message,color: purpleColor,),
+                title: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                           ),
+             ),
+            InkWell(
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>const ProfilePage()));
+              },
+              child: ListTile(
+                leading:  Icon(IconlyBold.profile,color: purpleColor,),
+                title: const Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                onTap: () {
+              
+                },
+              ),
             ),
             ListTile(
               leading:  Icon(IconlyBold.logout,color: purpleColor,),
@@ -180,7 +195,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
+                                    builder: (context) => const LoginScreen()));
                           },
                           child: Text(
                             'OK',

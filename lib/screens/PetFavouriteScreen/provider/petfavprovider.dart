@@ -36,18 +36,27 @@ class FavouriteProvider extends ChangeNotifier {
   List< FavouiteModel> get favourites {
     return [..._favourites];
   }
+  
+  // List<AddCartItem> _favItems = [];
 
-  Future getAllFavouritesData({BuildContext? context}) async {
+  // List<AddCartItem> get favItems => _favItems;
+
+  // void addToCart(AddCartItem item) {
+  //   _favItems.add(item);
+  //   notifyListeners();
+  // }
+
+  Future getAllFavouritesData({BuildContext? context,String? userId}) async {
     try {
       _isLoading = true;
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=1"),
+            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId"),
       );
 
       print(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=1");
+            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId");
 
       print(response.body);
 
@@ -103,26 +112,34 @@ class FavouriteProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  Future<void> AddtoFavourite({String? petid}) async {
-    final url = Uri.parse('http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=1&petid=$petid');
-    
+ Future<void> addItemToFavourites(
+      {String? petid, String? userid}) async {
+    var body = {
+      'petid': petid.toString(),
+      'aid': userid.toString(),
+     
+    };
+
     try {
-      final response = await https.post(url);
+      var response = await https.post(
+          Uri.parse(
+              'http://campus.sicsglobal.co.in/Project/pet_shop/api/addfavpet.php?aid=$userid&petid=$petid'),
+          body: body);
 
       if (response.statusCode == 200) {
-      getAllFavouritesData();
-        print(url);
-     
-        // Cart deleted successfully
-        print('Fav added successfully');
+        // Request successful
+        print('Added to cart successfully');
+        print('Response: ${response.body}');
       } else {
-        // Failed to delete cart
-        print('Failed to delete cart: ${response.statusCode}');
+        // Request failed with error code
+        print('Failed to add to cart. Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error deleting cart: $e');
+      // Exception thrown during request
+      print('Failed to add to cart. Exception: $e');
     }
   }
+
  
 
 

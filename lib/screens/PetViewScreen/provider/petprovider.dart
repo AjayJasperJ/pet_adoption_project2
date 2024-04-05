@@ -75,7 +75,11 @@ class PetProvider with ChangeNotifier {
               petImage: petDetails[i]['photo'].toString(),
               petAge: petDetails[i]['age'].toString(),
               petSex: petDetails[i]['sex'].toString(),
-              petWeight: petDetails[i]['weight'].toString()
+              petWeight: petDetails[i]['weight'].toString(),
+              petcolor: petDetails[i]['color'].toString(),
+              petdiet: petDetails[i]['diet'].toString(),
+              petbehaveier: petDetails[i]['behaviour'].toString(),
+              petnotes: petDetails[i]['notes'].toString()
             ),
           );
         }
@@ -129,7 +133,11 @@ class PetProvider with ChangeNotifier {
               petImage: petDetails[i]['photo'].toString(),
               petAge: petDetails[i]['age'].toString(),
               petSex: petDetails[i]['sex'].toString(),
-              petWeight: petDetails[i]['weight'].toString()
+              petWeight: petDetails[i]['weight'].toString(),
+              petcolor: petDetails[i]['color'].toString(),
+              petdiet: petDetails[i]['diet'].toString(),
+              petbehaveier: petDetails[i]['behaviour'].toString(),
+              petnotes: petDetails[i]['notes'].toString()
             ),
           );
         }

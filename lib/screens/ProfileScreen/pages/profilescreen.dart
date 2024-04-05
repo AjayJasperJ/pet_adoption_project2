@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/editprofilescreen.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/supportscreen.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/termsandconditionsscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -153,35 +155,46 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 10),
           Padding(
            padding: const EdgeInsets.symmetric(horizontal: 20),
-           child: Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-              child: Row(
-               
-                children: [
-                  Icon(IconlyLight.bookmark,color: Colors.blue,),
-                  SizedBox(width: 20),
-                  Text('My Orders',style: TextStyle(fontWeight: FontWeight.w900),)
-                ],
+           child: InkWell
+           (
+            onTap: () {
+              Navigator.push(context,MaterialPageRoute(builder:(context)=>const SupportScreen()));
+            },
+             child: Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
+                child: Row(
+                 
+                  children: [
+                    Icon(IconlyLight.bookmark,color: Colors.blue,),
+                    SizedBox(width: 20),
+                    Text('Support',style: TextStyle(fontWeight: FontWeight.w900),)
+                  ],
+                ),
               ),
-            ),
+             ),
            ),
          ),
             SizedBox(height: 10),
           Padding(
            padding: const EdgeInsets.symmetric(horizontal: 20),
-           child: Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-              child: Row(
-               
-                children: [
-                  Icon(IconlyLight.shieldDone,color: Colors.green),
-                  SizedBox(width: 20),
-                  Text('Help',style: TextStyle(fontWeight: FontWeight.w900),)
-                ],
+           child: InkWell(
+            onTap: () {
+              Navigator.push(context,MaterialPageRoute(builder:(context)=>const TermsandConditions()));
+            },
+             child: Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 15),
+                child: Row(
+                 
+                  children: [
+                    Icon(IconlyLight.shieldDone,color: Colors.green),
+                    SizedBox(width: 20),
+                    Text('Terms & Conditions',style: TextStyle(fontWeight: FontWeight.w900),)
+                  ],
+                ),
               ),
-            ),
+             ),
            ),
          )
         ],

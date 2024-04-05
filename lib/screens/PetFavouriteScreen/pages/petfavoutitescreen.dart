@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/widgets/petfavwidget.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
 import 'package:provider/provider.dart';
 import '../../../ExtraScreens/loadingscreen.dart';
 
 class PetFavouritePage extends StatefulWidget { 
+   static const routeName = 'all_favourites_screen';
   const PetFavouritePage({super.key});
 
   @override
@@ -16,8 +18,9 @@ class PetFavouritePage extends StatefulWidget {
 class _PetFavouritePageState extends State<PetFavouritePage> {
     @override
   void initState() {
+     final userProvider = Provider.of<UserProvider>(context, listen: false);
     Provider.of<FavouriteProvider>(context, listen: false)
-        .getAllFavouritesData(context: context);
+        .getAllFavouritesData(context: context,userId:userProvider.currentUserId );
   
     super.initState();
   }
@@ -28,7 +31,7 @@ class _PetFavouritePageState extends State<PetFavouritePage> {
     final favpet=Provider.of<FavouriteProvider>(context);
     return Scaffold(
         appBar: AppBar(
-        centerTitle: true,
+      
         leading:  IconButton(onPressed: (){
           Navigator.pop(context);
         // ignore: prefer_const_constructors

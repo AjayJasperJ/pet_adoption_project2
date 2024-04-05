@@ -15,12 +15,13 @@ class _AdoptionNowScreenState extends State<AdoptionNowScreen> {
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;
     return Scaffold(
+      
       body:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
          // const SizedBox(height: 60),
-          Center(child: Image.asset('assets/ty.png',scale: 2)),
+          Center(child: Image.asset('assets/ty.png',scale: 1)),
           const Center(child: Text('Adopt a Pet Successfully....!',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),),
           SizedBox(height: size.height*0.02),
           ElevatedButton(

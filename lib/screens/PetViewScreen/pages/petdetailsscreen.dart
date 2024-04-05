@@ -4,6 +4,8 @@ import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
+import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/globalsnackbar.dart';
+import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/productsnackbar.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
@@ -21,7 +23,8 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
    bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
-
+  GlobalSnackBar _snackBar =GlobalSnackBar();
+  ProductSnackBar _productSnackBar=ProductSnackBar();
     final size=MediaQuery.of(context).size;
        final pets = Provider.of<PetProvider>(context,listen: false);
       
@@ -61,16 +64,16 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(petData.petBreed,style: const TextStyle(fontWeight: FontWeight.w900,fontSize: 18),),
-                  Text('₹ 40.00',style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 18),),
+                  Text(petData.petName,style: const TextStyle(fontWeight: FontWeight.w900,fontSize: 18),),
+                  Text(petData.petspeciesName,style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 18),),
                   
                 ],
               ),
               Row(
                 children: [
                   Icon(LineIcons.dog,color: purpleColor),
-                  SizedBox(width: size.width*0.01),
-                  Text('Season Cateory :${petData.petspeciesName}')
+                  SizedBox(width: size.width*0.02),
+                  Text('Breed Name :${petData.petBreed}')
                 ],
               ),
              SizedBox(height: size.height*0.04),
@@ -125,10 +128,16 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                 ],
               ),
               SizedBox(height: size.height*0.02),
+              Text('Pet Color : ${petData.petcolor}',style: TextStyle(fontWeight: FontWeight.bold),),
+                SizedBox(height: size.height*0.01),
+                 Text('Pet Diet : ${petData.petdiet}',style: TextStyle(fontWeight: FontWeight.bold),),
+                   SizedBox(height: size.height*0.01),
+                    Text('Pet Behavoiur : ${petData.petbehaveier}',style: TextStyle(fontWeight: FontWeight.bold),),
+                  SizedBox(height: size.height*0.01),       
               const Text('Description',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17),),
                SizedBox(height: size.height*0.01),
-              const Text('The German Shepherd Dog, often known simply as the German Shepherd, is a highly intelligent and versatile breed. Originally developed in Germany for herding sheep, they have become one of the most popular and recognizable dog breeds worldwide. '),
-              SizedBox(height: size.height*0.04),
+              Text(petData.petnotes),
+             SizedBox(height: size.height*0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -142,18 +151,8 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
       ),
       child: IconButton(
         onPressed: ()async {
-        
-          
-        favpet.AddtoFavourite(petid: petData.petId); 
-                              ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        backgroundColor: purpleColor,
-        content: const Text('Item added favourite successfully!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-        duration: const Duration(seconds: 4),
-        
-      ));
-      await Navigator.push(context,MaterialPageRoute(builder:(context)=>const PetFavouritePage()));
-            
+         favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+         await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
           
         },
         icon: const Icon(
