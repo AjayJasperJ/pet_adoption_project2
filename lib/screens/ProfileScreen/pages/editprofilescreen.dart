@@ -341,7 +341,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       print(""" 'firstname': ${userNameController.text.trim()},
        'lastname':'mm',
         'phone': ${phoneNumberController.text.trim()},
-        'email': ${addressController.text.trim},
+        'email': 'jose@gmail.com',
         'password': '123',
         'gender':'Male',
         'address': ${addressController.text.trim()},

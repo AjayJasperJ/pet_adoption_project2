@@ -1,15 +1,18 @@
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:pet_adoption_carmel/ExtraScreens/loadingscreen.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/pages/adoplistscreen.dart';
 import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigtionprovider.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/categoryscreen.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/provider/categoryprovider.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/widgets/frontcategorywidget.dart';
 import 'package:pet_adoption_carmel/screens/LoginScreen/loginscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
+import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/widgets/petwidget.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.dart';
@@ -65,7 +68,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 18),
+                  fontSize: 17),
             ),
           
           Consumer<UserProvider>(builder: (context, value, child) {
@@ -89,7 +92,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap:(){
-             
+             Navigator.push(context, MaterialPageRoute(builder:(context)=>const MyOrdersScreen()));
             } ,
             child: Image.asset('assets/newadoption.png',height: 35,width: 35))
         )
@@ -151,6 +154,15 @@ class _PetViewScreenState extends State<PetViewScreen> {
                child: ListTile(
                 leading: Icon(IconlyBold.paper,color: purpleColor,),
                 title: Text('Pet Events',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                           ),
+             ),
+              InkWell(
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>const MyOrdersScreen()));
+              },
+               child: ListTile(
+                leading: Icon(IconlyBold.shieldDone,color: purpleColor,),
+                title: Text('My Adoptions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
              InkWell(
@@ -263,13 +275,57 @@ class _PetViewScreenState extends State<PetViewScreen> {
                SizedBox(height: size.height*0.02),
                Text('Categories',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                 SizedBox(height: size.height*0.02),
-               category.loadingSpinner
+               FadeInUp(
+                  duration:  const Duration(milliseconds: 1500),
+                 child: category.loadingSpinner
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const LoadingScreen(title: 'Loading'),
+                            CircularProgressIndicator(
+                              color:purpleColor,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                         
+                          ],
+                        )
+                      : category.category.isEmpty
+                          ? Center(
+                              child: Text(
+                              'No Categories...',
+                              style: TextStyle(color:purpleColor),
+                            ))
+                          : SizedBox(
+                              height: size.height * 0.07,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: category.category.length,
+                                itemBuilder: (context, intex) {
+                                  return FrontCategoryWidegt(
+                                    id: category.category[intex].id,
+                                    image: category.category[intex].image,
+                                   
+                                  );
+                                },
+                              ),
+                            ),
+               ),
+                     
+              SizedBox(
+                height: size.height*0.03,
+              ),
+              Text('Popular Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+              FadeInUp(
+                 duration:  const Duration(milliseconds: 1500),
+                child: pet.loadingSpinner
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const LoadingScreen(title: 'Loading'),
                           CircularProgressIndicator(
-                            color:purpleColor,
+                            color: purpleColor,
                           ),
                           const SizedBox(
                             width: 10,
@@ -277,93 +333,55 @@ class _PetViewScreenState extends State<PetViewScreen> {
                        
                         ],
                       )
-                    : category.category.isEmpty
+                    : pet.pets.isEmpty
                         ? Center(
                             child: Text(
-                            'No Categories...',
-                            style: TextStyle(color:purpleColor),
-                          ))
-                        : SizedBox(
-                            height: size.height * 0.07,
+                            'No Pets...',
+                            style: TextStyle(color: purpleColor),
+                          )):pet.searchProducts.isEmpty&&
+                          searchController.text.isNotEmpty?Center(
+                            child: Text('No Pets Avilable',style: TextStyle(color: purpleColor),),):
+                            searchController.text.isNotEmpty&&
+                            pet.searchProducts.isNotEmpty?
+                            SizedBox(
+                            height: size.height * 0.6,
                             child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: category.category.length,
+                              scrollDirection: Axis.vertical,
+                              itemCount: pet.searchProducts.length,
                               itemBuilder: (context, intex) {
-                                return FrontCategoryWidegt(
-                                  id: category.category[intex].id,
-                                  image: category.category[intex].image,
-                                 
+                                return AllPetWidget(
+                                  petid: pet.searchProducts[intex].petId,
+                                  name: pet.searchProducts[intex].petName,
+                                  age: pet.searchProducts[intex].petAge,
+                                  breed: pet.searchProducts[intex].petBreed,
+                                  petImage: pet.searchProducts[intex].petImage,
+                                  gender: pet.searchProducts[intex].petSex,
+                                  species: pet.searchProducts[intex].petspeciesName,
+                                );
+                              },
+                            ),
+                          )
+                
+                
+                        : SizedBox(
+                            height: size.height * 0.6,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: pet.pets.length,
+                              itemBuilder: (context, intex) {
+                                return AllPetWidget(
+                                  petid: pet.pets[intex].petId,
+                                  name: pet.pets[intex].petName,
+                                  age: pet.pets[intex].petAge,
+                                  breed: pet.pets[intex].petBreed,
+                                  petImage: pet.pets[intex].petImage,
+                                  gender: pet.pets[intex].petSex,
+                                  species: pet.pets[intex].petspeciesName,
                                 );
                               },
                             ),
                           ),
-                     
-              SizedBox(
-                height: size.height*0.03,
-              ),
-              Text('Popular Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-              pet.loadingSpinner
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const LoadingScreen(title: 'Loading'),
-                        CircularProgressIndicator(
-                          color: purpleColor,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                     
-                      ],
-                    )
-                  : pet.pets.isEmpty
-                      ? Center(
-                          child: Text(
-                          'No Pets...',
-                          style: TextStyle(color: purpleColor),
-                        )):pet.searchProducts.isEmpty&&
-                        searchController.text.isNotEmpty?Center(
-                          child: Text('No Pets Avilable',style: TextStyle(color: purpleColor),),):
-                          searchController.text.isNotEmpty&&
-                          pet.searchProducts.isNotEmpty?
-                          SizedBox(
-                          height: size.height * 0.6,
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: pet.searchProducts.length,
-                            itemBuilder: (context, intex) {
-                              return AllPetWidget(
-                                petid: pet.searchProducts[intex].petId,
-                                name: pet.searchProducts[intex].petName,
-                                age: pet.searchProducts[intex].petAge,
-                                breed: pet.searchProducts[intex].petBreed,
-                                petImage: pet.searchProducts[intex].petImage,
-                                gender: pet.searchProducts[intex].petSex,
-                                species: pet.searchProducts[intex].petspeciesName,
-                              );
-                            },
-                          ),
-                        )
-
-
-                      : SizedBox(
-                          height: size.height * 0.6,
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: pet.pets.length,
-                            itemBuilder: (context, intex) {
-                              return AllPetWidget(
-                                petid: pet.pets[intex].petId,
-                                name: pet.pets[intex].petName,
-                                age: pet.pets[intex].petAge,
-                                breed: pet.pets[intex].petBreed,
-                                petImage: pet.pets[intex].petImage,
-                                gender: pet.pets[intex].petSex,
-                                species: pet.pets[intex].petspeciesName,
-                              );
-                            },
-                          ),
-                        ),          
+              ),          
            
             ],
           ),

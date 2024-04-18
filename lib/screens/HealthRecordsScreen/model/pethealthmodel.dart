@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HealthRecordModel {
-  final String petid;
+  late final String petid;
   final String name;
   final String species;
   final String breed;

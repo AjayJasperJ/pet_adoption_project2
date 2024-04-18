@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/ExtraScreens/loadingscreen.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
@@ -46,38 +47,41 @@ class _PetCategoryScreenState extends State<PetCategoryScreen> {
             child: Text('Category Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
           ),
           Expanded(
-            child: petcategory.loadingSpinner
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const LoadingScreen(title: 'Loading'),
-                              CircularProgressIndicator(
-                                color: purpleColor,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                           
-                            ],
-                          )
-                        : petcategory.petcategory.isEmpty
-                            ?const CategoryEmptyScreen()
-                            : SizedBox(
-                              //  height: size.height * 0.6,
-                                child: GridView.builder(
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 0.93),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: petcategory.petcategory.length,
-                                  itemBuilder: (context, intex) {
-                                    return AllPetCategoryWidget(
-                                       id: petcategory.petcategory[intex].petid,
-                                       name: petcategory.petcategory[intex].name,
-                                       image: petcategory.petcategory[intex].photo,
-                                    
-                                    );
-                                  },
+            child: FadeInUp(
+               duration:  const Duration(milliseconds: 1500),
+              child: petcategory.loadingSpinner
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const LoadingScreen(title: 'Loading'),
+                                CircularProgressIndicator(
+                                  color: purpleColor,
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                             
+                              ],
+                            )
+                          : petcategory.petcategory.isEmpty
+                              ?const CategoryEmptyScreen()
+                              : SizedBox(
+                                //  height: size.height * 0.6,
+                                  child: GridView.builder(
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 0.93),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: petcategory.petcategory.length,
+                                    itemBuilder: (context, intex) {
+                                      return AllPetCategoryWidget(
+                                         id: petcategory.petcategory[intex].petid,
+                                         name: petcategory.petcategory[intex].name,
+                                         image: petcategory.petcategory[intex].photo,
+                                      
+                                      );
+                                    },
+                                  ),
+                                ),
+            ),
           ),
         ],
       ),     

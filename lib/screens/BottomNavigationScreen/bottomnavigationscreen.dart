@@ -10,6 +10,8 @@ import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.da
 
 
 
+
+
 class PetBottomNavigation extends StatefulWidget {
   const PetBottomNavigation({super.key});
 
@@ -22,7 +24,7 @@ class _PetBottomNavigationState extends State<PetBottomNavigation> {
   static  final List<Widget> _widgetOptions = <Widget>[
    const PetViewScreen(),
    const CategoryScreen(),
-  const PetFavouritePage(),
+   const PetFavouritePage(),
    const ProfilePage(),
   
   ];
@@ -34,6 +36,7 @@ class _PetBottomNavigationState extends State<PetBottomNavigation> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
+   
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -45,16 +48,17 @@ class _PetBottomNavigationState extends State<PetBottomNavigation> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
             child: GNav(
+              textStyle: TextStyle(fontWeight: FontWeight.w300,color: Colors.white),
               rippleColor: Colors.grey[300]!,
               
               hoverColor: Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.white,
-              iconSize: 24,
+              iconSize: 20,
               
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor:purpleColor, 
               color: Colors.black,
@@ -74,6 +78,7 @@ class _PetBottomNavigationState extends State<PetBottomNavigation> {
                 GButton(
                   icon:LineIcons.heart,
                   text: 'Favourites',
+                 
                 ),
                 GButton(
                   icon: LineIcons.user,

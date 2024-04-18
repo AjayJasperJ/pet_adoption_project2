@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/ExtraScreens/loadingscreen.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
@@ -42,44 +43,47 @@ class _EventScreenState extends State<EventScreen> {
             child: Text(' Pets Events Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
           ),
           Expanded(
-            child: event.loadingSpinner
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const LoadingScreen(title: 'Loading'),
-                              CircularProgressIndicator(
-                                color: purpleColor,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                           
-                            ],
-                          )
-                        :event.events.isEmpty
-                            ?const CategoryEmptyScreen()
-                            : SizedBox(
-                              //  height: size.height * 0.6,
-                                child: ListView.builder(
-                                  
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: event.events.length,
-                                  itemBuilder: (context, intex) {
-                                     return AllEventsWidget(
-                           id:event.events[intex].id,
-                           eventname: event.events[intex].eventName,
-                           eventlocation: event.events[intex].eventLocation,
-                           eventdate: event.events[intex].eventDate,
-                           eventtime: event.events[intex].eventTime,
-                           organizerName: event.events[intex].organizerName,
-                           organizerPhone: event.events[intex].organizerPhone,
-                           organizerEmail: event.events[intex].organizerEmail,
-                           description: event.events[intex].description,
-                           registrationDeadline: event.events[intex].registrationDeadline,
-                         );
-                                  },
+            child: FadeInUp(
+               duration:  const Duration(milliseconds: 1500),
+              child: event.loadingSpinner
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const LoadingScreen(title: 'Loading'),
+                                CircularProgressIndicator(
+                                  color: purpleColor,
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                             
+                              ],
+                            )
+                          :event.events.isEmpty
+                              ?const CategoryEmptyScreen()
+                              : SizedBox(
+                                //  height: size.height * 0.6,
+                                  child: ListView.builder(
+                                    
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: event.events.length,
+                                    itemBuilder: (context, intex) {
+                                       return AllEventsWidget(
+                             id:event.events[intex].id,
+                             eventname: event.events[intex].eventName,
+                             eventlocation: event.events[intex].eventLocation,
+                             eventdate: event.events[intex].eventDate,
+                             eventtime: event.events[intex].eventTime,
+                             organizerName: event.events[intex].organizerName,
+                             organizerPhone: event.events[intex].organizerPhone,
+                             organizerEmail: event.events[intex].organizerEmail,
+                             description: event.events[intex].description,
+                             registrationDeadline: event.events[intex].registrationDeadline,
+                           );
+                                    },
+                                  ),
+                                ),
+            ),
           ),
         ],
       ),     

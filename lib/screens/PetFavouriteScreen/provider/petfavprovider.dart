@@ -146,7 +146,7 @@ class FavouriteProvider extends ChangeNotifier {
 Future<void> deleteFav(String? favId, BuildContext context) async {
     final user = Provider.of<UserProvider>(context, listen: false);
     final url = Uri.parse(
-        'http://campus.sicsglobal.co.in/Project/pet_shop/api/delete_fav.php?fav_id=$favId');
+        'http://campus.sicsglobal.co.in/Project/pet_shop/api/delete_fav.php?fid=$favId');
 
     try {
       final response = await https.delete(url);

@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/widgets/orderwidget.dart';
+import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
 import 'package:provider/provider.dart';
@@ -37,7 +39,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         // ignore: prefer_const_constructors
         },icon: Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: purpleColor,
-        title: const Text('My Orders',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+        title: const Text('My Adoptions',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
       ),
     body:SingleChildScrollView(
       child: Padding(
@@ -48,53 +50,52 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               SizedBox(height: size.height*0.01),
      Padding(
        padding: const EdgeInsets.only(left: 30),
-       child: Text('My Orders Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+       child: Text('My Adoptions Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
      ),
             SizedBox(height: size.height*0.01),
-            order.loadingSpinner
-                          ? const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                LoadingScreen(title: 'Loading'),
-                                CircularProgressIndicator(
-                                  color:Colors.green,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                             
-                              ],
-                            )
-                          : order.orders.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                  'No Orders...',
-                                  style: TextStyle(color:Colors.green),
-                                ))
-                              : SizedBox(
-                                  //height: size.height * 0.6,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                    itemCount: order.orders.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                 
-                    itemBuilder: (context, index) {
-                      return AllOrdersWidget(
-                       orderid: order.orders[index].orderId,
-                       petid: order.orders[index].petId,
-                       petname: order.orders[index].name,
-                       image: order.orders[index].photo,
-                       breed: order.orders[index].breed,
-                       date: order.orders[index].date,
-                       species: order.orders[index].species,
-                       orderstatus: order.orders[index].orderStatus,
-                     
-                      
-                        );
-                    },
-                  )
-                                ),
+            FadeInUp(
+               duration:  const Duration(milliseconds: 1500),
+              child: order.loadingSpinner
+                            ? const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  LoadingScreen(title: 'Loading'),
+                                  CircularProgressIndicator(
+                                    color:Colors.green,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                               
+                                ],
+                              )
+                            : order.orders.isEmpty
+                                ? AdoptionNowScreen()
+                                : SizedBox(
+                                    //height: size.height * 0.6,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                      itemCount: order.orders.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                   
+                      itemBuilder: (context, index) {
+                        return AllOrdersWidget(
+                         orderid: order.orders[index].orderId,
+                         petid: order.orders[index].petId,
+                         petname: order.orders[index].name,
+                         image: order.orders[index].photo,
+                         breed: order.orders[index].breed,
+                         date: order.orders[index].date,
+                         species: order.orders[index].species,
+                         orderstatus: order.orders[index].orderStatus,
+                       
+                        
+                          );
+                      },
+                    )
+                                  ),
+            ),
           ],
         ),
       ),

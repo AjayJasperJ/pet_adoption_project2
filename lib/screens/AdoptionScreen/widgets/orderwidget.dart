@@ -36,7 +36,7 @@ class _AllOrdersWidgetState extends State<AllOrdersWidget> {
             children: [
               Container(
                 height: 100,
-                width: 120,
+                width: 140,
                 decoration: BoxDecoration(
                   image: DecorationImage(image: NetworkImage(widget.image),fit: BoxFit.cover),borderRadius: BorderRadius.circular(10)
                 ),
@@ -53,10 +53,10 @@ class _AllOrdersWidgetState extends State<AllOrdersWidget> {
                    SizedBox(height: size.height*0.01),
                   Container(
                     height: 30,
-                    width: 65,
+                    width: 75,
                    
-                    decoration: BoxDecoration( color:purpleColor,borderRadius: BorderRadius.circular(8)),
-                    child:  Center(child: Text(widget.orderstatus,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),))
+                    decoration: BoxDecoration( color:Colors.green[200],borderRadius: BorderRadius.circular(8)),
+                    child:  Center(child: Text(widget.orderstatus,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),))
                   )
                  
 

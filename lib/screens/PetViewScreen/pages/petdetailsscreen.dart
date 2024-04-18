@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
+import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/pages/healthscreen.dart';
+import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/provider/healthprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
@@ -33,6 +35,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
         final user=Provider.of<UserProvider>(context,listen: false);
       final petData =
         Provider.of<PetProvider>(context).pets.firstWhere((element) => element.petId == widget.id);
+       
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -77,7 +80,25 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                   Text('Breed Name :${petData.petBreed}')
                 ],
               ),
-             SizedBox(height: size.height*0.04),
+              SizedBox(height: size.height*0.01),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder:(context)=>const HealthScreen()));
+                },
+                child: Container(
+                  height: 25,
+                  width: 120,
+                 
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: purpleColor,),
+                  child: Center(child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.favorite,color: Colors.white,size: 12,),
+                      Text('Health Rocords',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 10),),
+                    ],
+                  ))),
+              ),
+             SizedBox(height: size.height*0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -153,7 +174,18 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
       child: InkWell(
         onTap: ()async{
             favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
-            SnackBar(backgroundColor: purpleColor,content: const Text('Item add to favourite successfully'),duration: const Duration(seconds: 4),);
+            ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: purpleColor,
+                            content: const Text(
+                              'Pet added to Favourite Succcessfully !',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            duration: const Duration(seconds: 4),
+                          ), 
+                        );
          await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
 
         },

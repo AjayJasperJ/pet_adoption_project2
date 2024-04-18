@@ -1,166 +1,120 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as https;
-// import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/model/pethealthmodel.dart';
-// import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/models/petfavmodel.dart';
-// import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
-// import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as https;
+import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/model/pethealthmodel.dart';
 
 
 
 
 
-// class HealthProvider extends ChangeNotifier {
+
+class HealthProvider extends ChangeNotifier {
  
-//   bool _isLoading = false;
-//   bool get islOading {
-//     return _isLoading;
-//   }
+  bool _isLoading = false;
+  bool get islOading {
+    return _isLoading;
+  }
 
-//   final bool _loadingSpinner = false;
-//   bool get loadingSpinner {
-//     return _loadingSpinner;
-//   }
+  final bool _loadingSpinner = false;
+  bool get loadingSpinner {
+    return _loadingSpinner;
+  }
 
-//   bool _isSelect = false;
+  bool _isSelect = false;
 
-//   bool get isSelect {
-//     return _isSelect;
-//   }
+  bool get isSelect {
+    return _isSelect;
+  }
 
-//   final bool _isError = false;
+  final bool _isError = false;
 
-//   bool get isError {
-//     return _isError;
-//   }
+  bool get isError {
+    return _isError;
+  }
 
-//   List<HealthRecordModel> _records = [];
-//   List<HealthRecordModel> get records {
-//     return [..._records];
-//   }
+  List<HealthRecordModel> _records = [];
+  List<HealthRecordModel> get records {
+    return [..._records];
+  }
   
  
 
-//   Future getAllHealthRecordData({BuildContext? context,String? userId}) async {
-//     try {
-//       _isLoading = true;
-//       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
-//       var response = await https.get(
-//         Uri.parse(
-//             "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId"),
-//       );
+  Future getAllHealthRecordData({BuildContext? context,String? petId}) async {
+    try {
+      _isLoading = true;
+      // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
+      var response = await https.get(
+        Uri.parse(
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_health_reports.php?pet_id=$petId"),
+      );
 
-//       print(
-//             "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId");
+      print(
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_health_reports.php?pet_id=$petId");
 
-//       print(response.body);
+      print(response.body);
 
-//       if (response.statusCode == 200) {
-//         _isLoading = false;
-//         _favourites = [];
-//         var extractedData = json.decode(response.body);
-//         //  print(json.decode(response.body) + 'printed extrated data');
-//         final List<dynamic> favDetails = extractedData['petDetails'];
-//         for (var i = 0; i < favDetails.length; i++) {
-//           _favourites.add(
-//             FavouiteModel(
-//               favid: favDetails[i]['fav_id'].toString(),
-//               petid:favDetails[i]['petid'].toString(),
-//               name: favDetails[i]['name'].toString(),
-//               species: favDetails[i]['species'].toString(),
-//               breed:favDetails[i]['breed'].toString(),
-//               age: favDetails[i]['age'].toString(),
-//               sex: favDetails[i]['sex'].toString(),
-//               color: favDetails[i]['color'].toString(),
-//               weight: favDetails[i]['weight'].toString(),
-//               dob: favDetails[i]['dob'].toString(),
-//               microchipid: favDetails[i]['microchipid'].toString(),
-//               aid: favDetails[i]['aid'].toString(),
-//               diet: favDetails[i]['diet'].toString(),
-//               behaviour: favDetails[i]['behaviour'].toString(),
-//               notes: favDetails[i]['notes'].toString(),
-//               status: favDetails[i]['status'].toString(),
-//               photo: favDetails[i]['photo'].toString(),
-//               addeddate: favDetails[i]['addeddate'].toString()
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        _records = [];
+        var extractedData = json.decode(response.body);
+        //  print(json.decode(response.body) + 'printed extrated data');
+        final List<dynamic> healthDetails = extractedData['petDetails'];
+        for (var i = 0; i < healthDetails.length; i++) {
+          _records.add(
+            HealthRecordModel(
+              petid:healthDetails[i]['petid'].toString(),
+              name: healthDetails[i]['name'].toString(),
+              species: healthDetails[i]['species'].toString(),
+              breed:healthDetails[i]['breed'].toString(),
+              age: healthDetails[i]['age'].toString(),
+              sex: healthDetails[i]['sex'].toString(),
+              color: healthDetails[i]['color'].toString(),
+              weight: healthDetails[i]['weight'].toString(),
+              dob: healthDetails[i]['dob'].toString(),
+              microchipid: healthDetails[i]['microchipid'].toString(),
+              diet: healthDetails[i]['diet'].toString(),
+              behaviour: healthDetails[i]['behaviour'].toString(),
+              status: healthDetails[i]['status'].toString(),
+              photo: healthDetails[i]['photo'].toString(),
+              addeddate: healthDetails[i]['addeddate'].toString(),
+              allergies: healthDetails[i]['allergies'].toString(),
+              caringTips: healthDetails[i]['caring_tips'].toString(),
+              dateOfVaccine: healthDetails[i]['date_of_vaccine'].toString(),
+              doctorName: healthDetails[i]['doctor_name'].toString(),
+              doctorPhone: healthDetails[i]['doctor_phone'].toString(),
+              medicalHistory: healthDetails[i]['medical_history'].toString(),
+              medicine: healthDetails[i]['medicine'].toString(),
+              vaccine: healthDetails[i]['vaccine'].toString(),
+
             
              
               
-//             ),
-//           );
-//         }
-//         ;
+            ),
+          );
+        }
+        ;
 
-//         print('favourites details' + _favourites.toString());
-//         _isLoading = false;
-//         print('Favourites loading completed --->' + 'loading data');
-//         notifyListeners();
-//       } else {
-//         _isLoading = true;
-//         notifyListeners();
-//       }
-//     } on HttpException catch (e) {
-//       // ignore: prefer_interpolation_to_compose_strings
-//       print('error in fav prod -->>' + e.toString());
-//       print('Favourite Data is one by one loaded the favouite' + e.toString());
-//       _isLoading = false;
+        print('favourites details' + _records.toString());
+        _isLoading = false;
+        print('Favourites loading completed --->' + 'loading data');
+        notifyListeners();
+      } else {
+        _isLoading = true;
+        notifyListeners();
+      }
+    } on HttpException catch (e) {
+      // ignore: prefer_interpolation_to_compose_strings
+      print('error in fav prod -->>' + e.toString());
+      print('Favourite Data is one by one loaded the favouite' + e.toString());
+      _isLoading = false;
 
-//       _isSelect = false;
-//       notifyListeners();
-//     }
-//   }
-//  Future<void> addItemToFavourites(
-//       {String? petid, String? userid}) async {
-//     var body = {
-//       'petid': petid.toString(),
-//       'aid': userid.toString(),
-     
-//     };
-
-//     try {
-//       var response = await https.post(
-//           Uri.parse(
-//               'http://campus.sicsglobal.co.in/Project/pet_shop/api/addfavpet.php?aid=$userid&petid=$petid'),
-//           body: body);
-
-//       if (response.statusCode == 200) {
-//         // Request successful
-//         print('Added to cart successfully');
-//         print('Response: ${response.body}');
-//       } else {
-//         // Request failed with error code
-//         print('Failed to add to cart. Status Code: ${response.statusCode}');
-//       }
-//     } catch (e) {
-//       // Exception thrown during request
-//       print('Failed to add to cart. Exception: $e');
-//     }
-//   }
-
-// Future<void> deleteFav(String? favId, BuildContext context) async {
-//     final user = Provider.of<UserProvider>(context, listen: false);
-//     final url = Uri.parse(
-//         'http://campus.sicsglobal.co.in/Project/pet_shop/api/delete_fav.php?fav_id=$favId');
-
-//     try {
-//       final response = await https.delete(url);
-//       print(url);
-//       if (response.statusCode == 200) {
-//         getAllFavouritesData(userId: user.currentUserId);
-//         // Cart deleted successfully
-//         print('Cart deleted successfully');
-//       } else {
-//         // Failed to delete cart
-//         print('Failed to delete cart: ${response.statusCode}');
-//       }
-//     } catch (e) {
-//       print('Error deleting cart: $e');
-//     }
-//   }
-
-
+      _isSelect = false;
+      notifyListeners();
+    }
+  }
  
-// }
 
+}
 
  

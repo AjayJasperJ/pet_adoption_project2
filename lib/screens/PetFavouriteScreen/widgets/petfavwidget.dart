@@ -73,7 +73,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
                           SnackBar(
                             backgroundColor: purpleColor,
                             content: const Text(
-                              'Cart item Deleted successfully!',
+                              'Favourite Deleted Successfully !',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -83,7 +83,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
                         );
                     }, 
                     iconSize: 18,
-                    icon: const Icon(Icons.favorite,color: Colors.red,),
+                    icon: const Icon(Icons.delete,color: Colors.green),
                   ),
                 ),
               ),
