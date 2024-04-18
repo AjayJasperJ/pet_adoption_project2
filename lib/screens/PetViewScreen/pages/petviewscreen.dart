@@ -16,7 +16,7 @@ import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.da
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/supportscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 import 'package:pet_adoption_carmel/screens/ViewEventScreen/pages/eventscreen.dart';
-import 'package:pet_adoption_carmel/screens/ViewOrdersScreen/pages/myordersscreen.dart';
+
 
 import 'package:provider/provider.dart';
 
@@ -91,7 +91,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
             onTap:(){
              
             } ,
-            child: Image.asset('assets/adoptp.png',height: 35,width: 35))
+            child: Image.asset('assets/newadoption.png',height: 35,width: 35))
         )
         ],
       ),
@@ -162,17 +162,12 @@ class _PetViewScreenState extends State<PetViewScreen> {
                 title: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
-            InkWell(
-              onTap: (){
+            ListTile(
+              leading:  Icon(IconlyBold.profile,color: purpleColor,),
+              title: const Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+              onTap: () {
                 Navigator.push(context,MaterialPageRoute(builder:(context)=>const ProfilePage()));
               },
-              child: ListTile(
-                leading:  Icon(IconlyBold.profile,color: purpleColor,),
-                title: const Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-                onTap: () {
-              
-                },
-              ),
             ),
             ListTile(
               leading:  Icon(IconlyBold.logout,color: purpleColor,),

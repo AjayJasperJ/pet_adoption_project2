@@ -1,6 +1,7 @@
   import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
-import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/pages/adoplistscreen.dart';
+
 
 
 
@@ -17,7 +18,7 @@ class GlobalSnackBar {
             child: Row(
               children: [
                 const Text(
-                  '1 Item added cart ',
+                  'Adop a Pet Successfully',
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
              
@@ -31,7 +32,7 @@ class GlobalSnackBar {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  PetFavouritePage()));
+                        builder: (context) =>  const MyOrdersScreen()));
               },
             
 
@@ -47,12 +48,12 @@ class GlobalSnackBar {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset('assets/cart.png',height: 20,width: 20,),
+                        Image.asset('assets/newdog1.png',height: 20,width: 20,),
                         // Icon(
                         //   Icons.shopping_bag_rounded,
                         //   color: Colors.white,
                         // ),
-                        Text('VIEW CART',
+                        Text('VIEW PETS',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,

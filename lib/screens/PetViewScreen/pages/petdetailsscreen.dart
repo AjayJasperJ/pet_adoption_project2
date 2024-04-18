@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
@@ -27,7 +28,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
   ProductSnackBar _productSnackBar=ProductSnackBar();
     final size=MediaQuery.of(context).size;
        final pets = Provider.of<PetProvider>(context,listen: false);
-      
+       final adoption=Provider.of<AdoptNowProvider>(context,listen: false);
         final favpet=Provider.of<FavouriteProvider>(context,listen: false);
         final user=Provider.of<UserProvider>(context,listen: false);
       final petData =
@@ -149,35 +150,57 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: purpleColor),
       ),
-      child: IconButton(
-        onPressed: ()async {
-         favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+      child: InkWell(
+        onTap: ()async{
+            favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+            SnackBar(backgroundColor: purpleColor,content: const Text('Item add to favourite successfully'),duration: const Duration(seconds: 4),);
          await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
-          
+
         },
-        icon: const Icon(
-        Icons.favorite,color: Colors.red,
-        ),
-      ),
+        child: Center(child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/fav.png',height: 32,width: 32),
+          ],
+        ))),
+      // child: IconButton(
+      //   onPressed: ()async {
+      //    favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+      //       SnackBar(backgroundColor: purpleColor,content: const Text('Item add to favourite successfully'),duration: const Duration(seconds: 4),);
+      //    await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+          
+      //   },
+      //   icon: const Icon(
+      //   Icons.favorite,color: Colors.red,
+      //   ),
+      // ),
     ),
                   InkWell(
                     onTap: () async{
-                      
+                       final provider =
+                                  Provider.of<AdoptNowProvider>(context,listen: false);
+                              bool isInCart = provider.orders.any(
+                                  (item) => item.petId == petData.petId);
+                              if (isInCart) {
+                                 ScaffoldMessenger.of(context).showSnackBar(
+                               _productSnackBar.productSnackbar(context: context)
+                              
+                              );
+                            
+                              
+                              } else {
+                                 adoption.addAdoptPet(
+                                  petid: petData.petId.toString(),
+                                  userid: user.currentUserId.toString(),
+                                 );
+                               
+                              ScaffoldMessenger.of(context).showSnackBar(
+                               _snackBar.customSnackbar(context: context)
+                               
+                              );
+                             
+                              }
 
-                     SnackBar(backgroundColor: purpleColor,content: const Text('Adoption pet successfully'),duration: const Duration(seconds: 4),);
-                    await  Navigator.push(context,MaterialPageRoute(builder: (context)=>const AdoptionNowScreen()));
-
-                       
-                      
-    //                    petcartapi.addItemToCart(petid: petData.petId,quanity:'0'); 
-    //                           ScaffoldMessenger.of(context).showSnackBar(
-    //    SnackBar(
-    //     backgroundColor: purpleColor,
-    //     content: const Text('Item added to cart successfully!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-    //     duration: const Duration(seconds: 4),
-    //   ),
-    // );
-    //                        await Navigator.push(context,MaterialPageRoute(builder: (context)=> AdoptionScreen()));
                     },
                     child: Container(
                      height: size.height*0.07,
@@ -188,9 +211,9 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                       child:  Center(child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                         Image.asset('assets/adoptp.png',height: 30,width: 30),
-                          SizedBox(width: size.width*0.04),
-                          const Text('Adoption Now',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
+                         Image.asset('assets/newadoption.png',height: 30,width: 30),
+                          SizedBox(width: size.width*0.06),
+                          const Text('Adopt Now',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
                         ],
                       )),
                                        ),

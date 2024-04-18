@@ -77,6 +77,8 @@ class _PetFavouritePageState extends State<PetFavouritePage> {
                 name: favpet.favourites[index].name,
                 image: favpet.favourites[index].photo,
                 breedname: favpet.favourites[index].breed,
+                favid: favpet.favourites[index].favid,
+
                 );
             },
           )

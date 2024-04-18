@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FavouiteModel {
-  final String favid;
+class HealthRecordModel {
   final String petid;
   final String name;
   final String species;
@@ -12,17 +11,22 @@ class FavouiteModel {
   final String weight;
   final String dob;
   final String microchipid;
-  final String aid;
   final String diet;
   final String behaviour;
   final String status;
-  final String notes;
+  final String caringTips;
   final String addeddate;
   final String photo;
+  final String vaccine;
+  final String dateOfVaccine;
+  final String medicine;
+  final String allergies;
+  final String medicalHistory;
+  final String doctorName;
+  final String doctorPhone;
 
-  FavouiteModel(
-      {required this.favid,
-      required this.petid,
+  HealthRecordModel(
+      {required this.petid,
       required this.name,
       required this.species,
       required this.breed,
@@ -32,17 +36,22 @@ class FavouiteModel {
       required this.weight,
       required this.dob,
       required this.microchipid,
-      required this.aid,
       required this.diet,
       required this.behaviour,
       required this.status,
-      required this.notes,
+      required this.caringTips,
       required this.addeddate,
-      required this.photo});
+      required this.photo,
+      required this.vaccine,
+      required this.dateOfVaccine,
+      required this.medicine,
+      required this.allergies,
+      required this.medicalHistory,
+      required this.doctorName,
+      required this.doctorPhone});
 
-  factory FavouiteModel.fromJson(Map<String, dynamic> json) {
-    return FavouiteModel(
-        favid: json['fav_id'],
+  factory HealthRecordModel.fromJson(Map<String, dynamic> json) {
+    return HealthRecordModel(
         petid: json['petid'],
         name: json['name'],
         species: json['species'],
@@ -53,12 +62,18 @@ class FavouiteModel {
         weight: json['weight'],
         dob: json['dob'],
         microchipid: json['microchipid'],
-        aid: json['aid'],
         diet: json['diet'],
         behaviour: json['behaviour'],
         status: json['status'],
-        notes: json['notes'],
+        caringTips: json['caring_tips'],
         addeddate: json['addeddate'],
-        photo: json['photo']);
+        photo: json['photo'],
+        vaccine: json['vaccine'],
+        dateOfVaccine: json['date_of_vaccine'],
+        medicine: json['medicine'],
+        allergies: json['allergies'],
+        medicalHistory: json['medical_history'],
+        doctorName: json['doctor_name'],
+        doctorPhone: json['doctor_phone']);
   }
 }

@@ -100,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   @override
   void initState() {
+    super.initState();
     _passwordVisible = false;
   }
 
@@ -153,6 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: size.height * 0.01),
                         TextFormField(
+                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                           controller: emailcontroller,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
@@ -164,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               // hintText: 'Enter Phone Number/Email ID/BN User Id',
                               hintText: 'Email',
-                              hintStyle: const TextStyle(fontSize: 13,color: Colors.white),
+                              hintStyle: const TextStyle(fontSize: 13,color: Colors.white,fontWeight: FontWeight.bold),
                               
                               
                               border: OutlineInputBorder(
@@ -187,9 +189,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: size.height * 0.01),
                         TextFormField(
+                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                           obscureText: _passwordVisible,
                           controller: passwordcontroller,
-                          keyboardType: TextInputType.phone,
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                               fillColor: Colors.white.withOpacity(0.5),
                               filled: true,
@@ -201,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                _passwordVisible
                ? Icons.visibility
                : Icons.visibility_off,
-               color: Colors.grey
+               color: Colors.grey[400]
                ),
             onPressed: () {
            
@@ -331,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           builder: (context) =>
                                               const RegisterPage()));
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Register',
                                   style: TextStyle(
                                       color: Colors.blue,

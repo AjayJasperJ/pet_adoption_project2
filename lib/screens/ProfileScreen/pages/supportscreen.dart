@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigationscreen.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/feedbackprovider.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 
 class SupportScreen extends StatefulWidget {
@@ -37,14 +39,12 @@ class _SupportScreenState extends State<SupportScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+    final support=Provider.of<FeedbackProvider>(context);
+    final userData=Provider.of<UserProvider>(context);
+  
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: purpleColor,
-          title: Text('Support',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),),
-      //  backgroundColor:Colors.grey[200],
+        backgroundColor:Colors.grey[300],
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 13),
@@ -78,7 +78,7 @@ class _SupportScreenState extends State<SupportScreen> {
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
-                    height: size.height * 0.03,
+                    height: size.height * 0.06,
                   ),
                   InkWell(
                     onTap: ()async{
@@ -164,7 +164,7 @@ class _SupportScreenState extends State<SupportScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.03,
+                    height: size.height * 0.05,
                   ),
                   const Text(
                     'Feedback',
@@ -174,14 +174,14 @@ class _SupportScreenState extends State<SupportScreen> {
                     height: size.height * 0.002,
                   ),
                   Text(
-                    'Enter your message',
+                    'Enter your Feedback',
                     style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: 15,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
-                    height: size.height * 0.02,
+                    height: size.height * 0.04,
                   ),
                
                   // Padding(
@@ -254,7 +254,7 @@ class _SupportScreenState extends State<SupportScreen> {
                           style: const TextStyle(color: Colors.black),
                           validator: (value) {
                             if(value!.isEmpty){
-                              return 'Please enter your comments';
+                              return 'Please enter your feedback';
                             }
                             
                           },
@@ -274,7 +274,7 @@ class _SupportScreenState extends State<SupportScreen> {
                             ElevatedButton.styleFrom(backgroundColor: purpleColor),
                         onPressed: ()async {
                         if (_formKey.currentState!.validate()) {
-                                                
+                                support.addFeedback(comments: commentcontroller.toString(),userId:userData.currentUserId.toString());                        
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: purpleColor,
                                   content: const Text("Feedback added successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));

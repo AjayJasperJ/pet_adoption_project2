@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/models/petfavmodel.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -69,6 +71,7 @@ class FavouriteProvider extends ChangeNotifier {
         for (var i = 0; i < favDetails.length; i++) {
           _favourites.add(
             FavouiteModel(
+              favid: favDetails[i]['fav_id'].toString(),
               petid:favDetails[i]['petid'].toString(),
               name: favDetails[i]['name'].toString(),
               species: favDetails[i]['species'].toString(),
@@ -140,7 +143,26 @@ class FavouriteProvider extends ChangeNotifier {
     }
   }
 
- 
+Future<void> deleteFav(String? favId, BuildContext context) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+    final url = Uri.parse(
+        'http://campus.sicsglobal.co.in/Project/pet_shop/api/delete_fav.php?fav_id=$favId');
+
+    try {
+      final response = await https.delete(url);
+      print(url);
+      if (response.statusCode == 200) {
+        getAllFavouritesData(userId: user.currentUserId);
+        // Cart deleted successfully
+        print('Cart deleted successfully');
+      } else {
+        // Failed to delete cart
+        print('Failed to delete cart: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error deleting cart: $e');
+    }
+  }
 
 
  

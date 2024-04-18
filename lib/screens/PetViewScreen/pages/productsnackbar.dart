@@ -17,7 +17,7 @@ class ProductSnackBar {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/cart.png',height: 35,width: 35,),
+                Image.asset('assets/newdog1.png',height: 35,width: 35,),
                 const SizedBox(width: 20),
                 const Text(
                   'Product Already added in cart',
@@ -50,7 +50,7 @@ class ProductSnackBar {
 
       margin: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      backgroundColor: purpleColor,
+      backgroundColor: purpleColor,  
       duration: const Duration(milliseconds:1500),
       behavior: SnackBarBehavior.floating,
       // action: SnackBarAction(

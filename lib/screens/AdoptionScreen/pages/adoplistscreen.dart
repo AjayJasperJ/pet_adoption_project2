@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
-import 'package:pet_adoption_carmel/screens/ViewOrdersScreen/provider/orderprovider.dart';
-import 'package:pet_adoption_carmel/screens/ViewOrdersScreen/widgets/orderwidget.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/widgets/orderwidget.dart';
+import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
 import 'package:provider/provider.dart';
 import '../../../ExtraScreens/loadingscreen.dart';
@@ -17,8 +18,9 @@ class MyOrdersScreen extends StatefulWidget {
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
     @override
   void initState() {
-    Provider.of<OrderProvider>(context, listen: false)
-        .getAllOrderData(context: context);
+     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    Provider.of<AdoptNowProvider>(context, listen: false)
+        .getAllOrdersData(context: context, userid: userProvider.currentUserId);
   
     super.initState();
   }
@@ -26,7 +28,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;
-    final order=Provider.of<OrderProvider>(context);
+    final order=Provider.of<AdoptNowProvider>(context);
     return Scaffold(
         appBar: AppBar(
         
@@ -35,7 +37,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         // ignore: prefer_const_constructors
         },icon: Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: purpleColor,
-        title: const Text('Category Pets',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
+        title: const Text('My Orders',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
       ),
     body:SingleChildScrollView(
       child: Padding(
@@ -86,7 +88,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                        breed: order.orders[index].breed,
                        date: order.orders[index].date,
                        species: order.orders[index].species,
-                       totalAmount: order.orders[index].totalAmount,
+                       orderstatus: order.orders[index].orderStatus,
+                     
                       
                         );
                     },

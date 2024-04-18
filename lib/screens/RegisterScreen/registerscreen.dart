@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:http/http.dart' as http;
+import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/Helpers/Images/images.dart';
 import 'package:pet_adoption_carmel/screens/LoginScreen/loginscreen.dart';
 
@@ -39,12 +42,36 @@ String firstname,String lastname,String dob,String phone,String email,String pas
       body: body,
       
     );
+      var jsonData=json.decode(response.body);
 
     if (response.statusCode == 200) {
+         if(jsonData['status']==true){
+          ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(
+          backgroundColor: purpleColor,
+          content: Text('Registration Successful!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          duration: Duration(seconds: 4),
+        ),
+      );
+      Navigator.push(context,MaterialPageRoute(builder:(context)=>const LoginScreen()));
+      print(body);
+      print("Response body${response.body}");
+    
+      }
+      print(body);
+      print("Response body${response.body}");
+      print('Registration successful');
       print(body);
       print("Response body${response.body}");
       print('Registration successful');
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(
+          backgroundColor: purpleColor,
+          content: Text('Already email and password Exists',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          duration: Duration(seconds: 4),
+        ),
+      );
       print('Error: ${response.statusCode}');
     }
   } catch (error) {
