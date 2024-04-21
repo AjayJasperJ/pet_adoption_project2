@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/provider/categoryprovider.dart';
@@ -45,49 +46,52 @@ class _CategoryScreenState extends State<CategoryScreen> {
           children: [
      Text('Category Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
             SizedBox(height: size.height*0.02),
-            category.loadingSpinner
-                          ? const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                LoadingScreen(title: 'Loading'),
-                                CircularProgressIndicator(
-                                  color:Colors.green,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                             
-                              ],
-                            )
-                          : category.category.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                  'No Categoeies...',
-                                  style: TextStyle(color:Colors.green),
-                                ))
-                              : SizedBox(
-                                  //height: size.height * 0.6,
-                                  child: GridView.builder(
-                                    scrollDirection: Axis.vertical,
-                    itemCount: category.category.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                     // childAspectRatio: 0.98,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                    ),
-                    itemBuilder: (context, index) {
-                      return AllCategoryWidget(
-                        id: category.category[index].id,
-                        name: category.category[index].name,
-                        image: category.category[index].image,
-                      
-                        );
-                    },
-                  )
-                                ),
+            FadeInUp(
+               duration:  const Duration(milliseconds: 1500),
+              child: category.loadingSpinner
+                            ? const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  LoadingScreen(title: 'Loading'),
+                                  CircularProgressIndicator(
+                                    color:Colors.green,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                               
+                                ],
+                              )
+                            : category.category.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                    'No Categoeies...',
+                                    style: TextStyle(color:Colors.green),
+                                  ))
+                                : SizedBox(
+                                    //height: size.height * 0.6,
+                                    child: GridView.builder(
+                                      scrollDirection: Axis.vertical,
+                      itemCount: category.category.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                       // childAspectRatio: 0.98,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                      ),
+                      itemBuilder: (context, index) {
+                        return AllCategoryWidget(
+                          id: category.category[index].id,
+                          name: category.category[index].name,
+                          image: category.category[index].image,
+                        
+                          );
+                      },
+                    )
+                                  ),
+            ),
           ],
         ),
       ),

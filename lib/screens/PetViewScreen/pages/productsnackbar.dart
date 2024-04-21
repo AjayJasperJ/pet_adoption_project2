@@ -20,8 +20,8 @@ class ProductSnackBar {
                 Image.asset('assets/newdog1.png',height: 35,width: 35,),
                 const SizedBox(width: 20),
                 const Text(
-                  'Product Already added in cart',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  'Pet Already in Adoption List',
+                  style: TextStyle(color: Colors.white, fontSize: 14,fontWeight: FontWeight.bold),
                 ),
              
               ],

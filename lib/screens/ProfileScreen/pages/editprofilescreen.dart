@@ -147,7 +147,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 ),
                 SizedBox(height: size.height * 0.01),
                 const Text(
-                  'Email Address',
+                  'Address',
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w500),
                 ),
@@ -159,7 +159,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     controller: addressController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                        hintText: 'Enter Email Address',
+                        hintText: 'Enter  Address',
                         hintStyle: TextStyle(fontSize: 13),
                         border: OutlineInputBorder()),
                   ),
@@ -246,23 +246,23 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           //         backgroundImage: AssetImage('assets/person.png'),
           //       )
           child: CircleAvatar(
-            radius: 28,
+            radius: 30,
             child: ClipOval(
               child: image != null
                   ? Image.file(image!)
-                  : Image.asset('assets/profile.png'),
+                  : Image.asset('assets/newprofile.png'),
             ),
           ),
         ),
-        const Positioned(
-            bottom: 30.0,
-            top: 50.0,
-            left: 55,
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.black,
-              size: 28,
-            ))
+        // const Positioned(
+        //     bottom: 30.0,
+        //     top: 50.0,
+        //     left: 55,
+        //     child: Icon(
+        //       Icons.camera_alt,
+        //       color: Colors.black,
+        //       size: 28,
+        //     ))
       ],
     );
   }
@@ -317,10 +317,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://campus.sicsglobal.co.in/Project/pet_shop/api/edit_profile.php'),
+            'http://campus.sicsglobal.co.in/Project/PetAdoption/api/edit_profile.php'),
       );
       print(
-          'http://campus.sicsglobal.co.in/Project/pet_shop/api/edit_profile.php');
+          'http://campus.sicsglobal.co.in/Project/PetAdoption/api/edit_profile.php');
       request.fields.addAll({
         'firstname': userNameController.text.trim(),
         'lastname':'mm',

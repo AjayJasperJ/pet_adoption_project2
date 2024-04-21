@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
+import 'package:pet_adoption_carmel/screens/AdoptionScreen/pages/adoptionemptyscreen.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/widgets/orderwidget.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
@@ -70,7 +71,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                 ],
                               )
                             : order.orders.isEmpty
-                                ? AdoptionNowScreen()
+                                ? AdoptionEmptyScreen()
                                 : SizedBox(
                                     //height: size.height * 0.6,
                                     child: ListView.builder(

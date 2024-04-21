@@ -6,13 +6,13 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:pet_adoption_carmel/ExtraScreens/loadingscreen.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/pages/adoplistscreen.dart';
-import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigtionprovider.dart';
+
 import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/categoryscreen.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/provider/categoryprovider.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/widgets/frontcategorywidget.dart';
 import 'package:pet_adoption_carmel/screens/LoginScreen/loginscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
-import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
+
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/widgets/petwidget.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.dart';
@@ -43,7 +43,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
     Provider.of<CategoryProvider>(context, listen: false)
         .getAllCategoryData(context: context);
 
-    Provider.of<UserProvider>(context,listen: false).getUsertData(context: context);
+    Provider.of<UserProvider>(context,listen: false).getUserData(context: context);
     super.initState();
   }
 
@@ -52,7 +52,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
     final size = MediaQuery.of(context).size;
     final pet = Provider.of<PetProvider>(context);
     final category=Provider.of<CategoryProvider>(context);
-    final navigation=Provider.of<BottomNavigationBarProvider>(context);
+
     final userprovider=Provider.of<UserProvider>(context,listen: false);
 
     return Scaffold(
@@ -107,16 +107,36 @@ class _PetViewScreenState extends State<PetViewScreen> {
                 decoration: BoxDecoration(color: purpleColor),
                 currentAccountPicture: const CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage('assets/profile.png'),
+                  backgroundImage: AssetImage('assets/newprofile.png'),
                 ),
-                accountName: const Text(
-                  'Vishal',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                accountEmail: const Text(
-                  'vishal123@gmail.com',
-                  style: TextStyle(fontWeight: FontWeight.w400),
-                )),
+                accountName: Consumer<UserProvider>(builder: (context, value, child) {
+                String userAddress = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userAddress = value.users[i].firstname;
+                  print(userAddress+'vvvvvvvvv');
+                }
+                return Text(
+                  '$userAddress',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900),
+                ); 
+              }),
+                accountEmail:Consumer<UserProvider>(builder: (context, value, child) {
+                String userAddress = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userAddress = value.users[i].email;
+                  print(userAddress+'vvvvvvvvv');
+                }
+                return Text(
+                  '$userAddress',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400),
+                );
+              }),),
             ListTile(
               leading:  Icon(IconlyBold.home,color: purpleColor,),
               title: const Text('Dashboard',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
@@ -350,13 +370,13 @@ class _PetViewScreenState extends State<PetViewScreen> {
                               itemCount: pet.searchProducts.length,
                               itemBuilder: (context, intex) {
                                 return AllPetWidget(
-                                  petid: pet.searchProducts[intex].petId,
-                                  name: pet.searchProducts[intex].petName,
-                                  age: pet.searchProducts[intex].petAge,
-                                  breed: pet.searchProducts[intex].petBreed,
-                                  petImage: pet.searchProducts[intex].petImage,
-                                  gender: pet.searchProducts[intex].petSex,
-                                  species: pet.searchProducts[intex].petspeciesName,
+                                  petid: pet.searchProducts[intex].petid,
+                                  name: pet.searchProducts[intex].name,
+                                  age: pet.searchProducts[intex].age,
+                                  breed: pet.searchProducts[intex].breed,
+                                  petImage: pet.searchProducts[intex].photo,
+                                  gender: pet.searchProducts[intex].sex,
+                                  species: pet.searchProducts[intex].species,
                                 );
                               },
                             ),
@@ -370,13 +390,13 @@ class _PetViewScreenState extends State<PetViewScreen> {
                               itemCount: pet.pets.length,
                               itemBuilder: (context, intex) {
                                 return AllPetWidget(
-                                  petid: pet.pets[intex].petId,
-                                  name: pet.pets[intex].petName,
-                                  age: pet.pets[intex].petAge,
-                                  breed: pet.pets[intex].petBreed,
-                                  petImage: pet.pets[intex].petImage,
-                                  gender: pet.pets[intex].petSex,
-                                  species: pet.pets[intex].petspeciesName,
+                                  petid: pet.pets[intex].petid,
+                                  name: pet.pets[intex].name,
+                                  age: pet.pets[intex].age,
+                                  breed: pet.pets[intex].breed,
+                                  petImage: pet.pets[intex].photo,
+                                  gender: pet.pets[intex].sex,
+                                  species: pet.pets[intex].species,
                                 );
                               },
                             ),

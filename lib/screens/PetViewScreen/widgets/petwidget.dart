@@ -78,7 +78,7 @@ class _AllPetWidgetState extends State<AllPetWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                      Text(
-                      widget.name.substring(0,16),
+                      widget.name,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.fade,
                     ),

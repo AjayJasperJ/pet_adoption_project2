@@ -1,51 +1,61 @@
 import 'package:flutter/material.dart';
 
-class PetModel  {
-  final String petId;
-  final String petName;
-  final String petBreed;
-  final String petImage;
-  final String petspeciesName;
-  final String petSex;
-  final String petAge;
-  final String petWeight;
-  final String petcolor;
-  final String petdiet;
-  final String petbehaveier;
-  final String petnotes;
-  
+class PetModel {
+  final String petid;
+  final String name;
+  final String species;
+  final String breed;
+  final String age;
+  final String sex;
+  final String color;
+  final String weight;
+  final String dob;
+  final String microchipid;
+  final String aid;
+  final String diet;
+  final String behaviour;
+  final String status;
+  final String notes;
+  final String addeddate;
+  final String photo;
+ 
 
+  PetModel(
+      {required this.petid,
+      required this.name,
+      required this.species,
+      required this.breed,
+      required this.age,
+      required this.sex,
+      required this.color,
+      required this.weight,
+      required this.dob,
+      required this.microchipid,
+      required this.aid,
+      required this.diet,
+      required this.behaviour,
+      required this.status,
+      required this.notes,
+      required this.addeddate,
+      required this.photo});
 
-  PetModel({
-   required this.petId,
-   required this.petName,
-   required this.petBreed,
-   required this.petImage,
-   required this.petspeciesName,
-   required this.petAge,
-   required this.petSex,
-   required this.petWeight,
-   required this.petcolor,
-   required this.petdiet,
-   required this.petbehaveier,
-   required this.petnotes
-  
-  });
-  factory PetModel.fromJson(Map<String,dynamic>json){
-    return PetModel(
-      petId:json['petid'] ,
-      petName: json['name'],
-      petBreed: json['breed'], 
-      petImage: json['photo'],
-      petspeciesName: json['species'],
-      petAge: json['age'],
-      petSex:json['sex'],
-      petWeight: json['weight'],
-      petcolor: json['color'],
-      petdiet: json['diet'],
-      petbehaveier: json['behaviour'],
-      petnotes: json['notes']
-    
-      );
-  }
-}
+factory PetModel.fromJson(Map<String, dynamic> json) {
+  return PetModel(
+    petid:json['petid'],
+    name: json['name'],
+    species: json['species'],
+    breed: json['breed'],
+    age: json['age'],
+    sex:json['sex'],
+    color: json['color'],
+    weight: json['weight'],
+    dob: json['dob'], 
+    microchipid: json['microchipid'],
+    aid: json['aid'],
+    diet: json['diet'],
+    behaviour: json['behaviour'],
+    status: json['status'],
+    notes:  json['notes'],
+    addeddate: json['addeddate'],
+    photo: json['photo']);
+  }}

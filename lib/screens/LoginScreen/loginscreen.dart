@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(email);
     print(password);
     const url =
-        'http://campus.sicsglobal.co.in/Project/pet_shop/api/login.php';
+        'http://campus.sicsglobal.co.in/Project/PetAdoption/api/login.php';
 
     Map<String, String> body = {'email': email, 'password': password};
 

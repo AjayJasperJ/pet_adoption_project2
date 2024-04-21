@@ -19,7 +19,7 @@ class GlobalSnackBar {
               children: [
                 const Text(
                   'Adop a Pet Successfully',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(color: Colors.white, fontSize: 14,fontWeight: FontWeight.bold),
                 ),
              
               ],

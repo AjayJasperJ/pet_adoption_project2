@@ -50,11 +50,11 @@ class PetProvider with ChangeNotifier {
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewallpets.php"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewallpets.php"),
       );
 
       print(
-          "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewallpets.php");
+          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewallpets.php");
 
       print(response.body);
 
@@ -68,20 +68,28 @@ class PetProvider with ChangeNotifier {
         for (var i = 0; i < petDetails.length; i++) {
           _pets.add(
             PetModel(
-              petId: petDetails[i]['petid'].toString(),
-              petName: petDetails[i]['name'].toString(),
-              petBreed: petDetails[i]['breed'].toString(),
-              petspeciesName: petDetails[i]['species'].toString(),
-              petImage: petDetails[i]['photo'].toString(),
-              petAge: petDetails[i]['age'].toString(),
-              petSex: petDetails[i]['sex'].toString(),
-              petWeight: petDetails[i]['weight'].toString(),
-              petcolor: petDetails[i]['color'].toString(),
-              petdiet: petDetails[i]['diet'].toString(),
-              petbehaveier: petDetails[i]['behaviour'].toString(),
-              petnotes: petDetails[i]['notes'].toString()
+              petid: petDetails[i]['petid'].toString(),
+              name: petDetails[i]['name'].toString(),
+              age: petDetails[i]['age'].toString(),
+              aid: petDetails[i]['aid'].toString(),
+              breed: petDetails[i]['breed'].toString(),
+              color: petDetails[i]['color'].toString(),
+              dob: petDetails[i]['dob'].toString(),
+              addeddate: petDetails[i]['addeddate'].toString(),
+              behaviour: petDetails[i]['behaviour'].toString(),
+              diet: petDetails[i]['diet'].toString(),
+              microchipid: petDetails[i]['microchipid'].toString(),
+              notes: petDetails[i]['notes'].toString(),
+              photo: petDetails[i]['photo'].toString(),
+              sex: petDetails[i]['sex'].toString(),
+              species: petDetails[i]['species'].toString(),
+              status: petDetails[i]['status'].toString(),
+              weight: petDetails[i]['weight'].toString(),
+              
+             
+            
             ),
-          );
+          ); 
         }
         ;
 
@@ -107,11 +115,11 @@ class PetProvider with ChangeNotifier {
     _isLoading = true;
     var response = await https.get(
       Uri.parse(
-          "http://campus.sicsglobal.co.in/Project/pet_shop/api/search_pet.php?keyword=$value"),
+          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/search_pet.php?keyword=$value"),
     );
 
     print(
-        "http://campus.sicsglobal.co.in/Project/pet_shop/api/search_pet.php?keyword=$value");
+        "http://campus.sicsglobal.co.in/Project/PetAdoption/api/search_pet.php?keyword=$value");
 
     if (response.statusCode == 200) {
       var responseBody = response.body;
@@ -125,19 +133,27 @@ class PetProvider with ChangeNotifier {
         final List<dynamic> petDetails = extractedData['petDetails'];
         for (var i = 0; i < petDetails.length; i++) {
           _searchProducts.add(
-            PetModel(
-              petId: petDetails[i]['petid'].toString(),
-              petName: petDetails[i]['name'].toString(),
-              petBreed: petDetails[i]['breed'].toString(),
-              petspeciesName: petDetails[i]['species'].toString(),
-              petImage: petDetails[i]['photo'].toString(),
-              petAge: petDetails[i]['age'].toString(),
-              petSex: petDetails[i]['sex'].toString(),
-              petWeight: petDetails[i]['weight'].toString(),
-              petcolor: petDetails[i]['color'].toString(),
-              petdiet: petDetails[i]['diet'].toString(),
-              petbehaveier: petDetails[i]['behaviour'].toString(),
-              petnotes: petDetails[i]['notes'].toString()
+             PetModel(
+              petid: petDetails[i]['petid'].toString(),
+              name: petDetails[i]['name'].toString(),
+              age: petDetails[i]['age'].toString(),
+              aid: petDetails[i]['aid'].toString(),
+              breed: petDetails[i]['breed'].toString(),
+              color: petDetails[i]['color'].toString(),
+              dob: petDetails[i]['dob'].toString(),
+              addeddate: petDetails[i]['addeddate'].toString(),
+              behaviour: petDetails[i]['behaviour'].toString(),
+              diet: petDetails[i]['diet'].toString(),
+              microchipid: petDetails[i]['microchipid'].toString(),
+              notes: petDetails[i]['notes'].toString(),
+              photo: petDetails[i]['photo'].toString(),
+              sex: petDetails[i]['sex'].toString(),
+              species: petDetails[i]['species'].toString(),
+              status: petDetails[i]['status'].toString(),
+              weight: petDetails[i]['weight'].toString(),
+              
+             
+            
             ),
           );
         }

@@ -83,7 +83,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
                         );
                     }, 
                     iconSize: 18,
-                    icon: const Icon(Icons.delete,color: Colors.green),
+                    icon: const Icon(Icons.delete,color: Colors.red),
                   ),
                 ),
               ),
@@ -93,8 +93,8 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.name.substring(0,16)
-                    ,                        style: TextStyle(color:purpleColor,fontWeight: FontWeight.bold,),
+                      widget.name,
+                                      style: TextStyle(color:purpleColor,fontWeight: FontWeight.bold,),
                     ),
                     Text(widget.breedname,style: TextStyle(fontWeight: FontWeight.w900,fontSize: 11),)
                   

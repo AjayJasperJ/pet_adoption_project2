@@ -4,32 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:pet_adoption_carmel/screens/ProfileScreen/models/profilemodel.dart';
 
-
-
 class UserProvider with ChangeNotifier {
   bool _isLoading = false;
-  bool get islOading {
+  bool get isLoading {
     return _isLoading;
   }
-
-  final bool _loadingSpinner = false;
-  bool get loadingSpinner {
-    return _loadingSpinner;
-  }
-
-  bool _isSelect = false;
-
-  bool get isSelect {
-    return _isSelect;
-  }
-
-  final bool _isError = false;
-
-  bool get isError {
-    return _isError;
-  }
-
-
 
   List<ProfileModel> _users = [];
   List<ProfileModel> get users {
@@ -42,60 +21,52 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getUsertData({BuildContext? context}) async {
+  Future<void> getUserData({BuildContext? context}) async {
     try {
       _isLoading = true;
-      // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/view_profile.php?user_id=$currentUserId"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_profile.php?user_id=$currentUserId"),
       );
 
       print(
-          "http://campus.sicsglobal.co.in/Project/pet_shop/api/view_profile.php?user_id=$currentUserId");
+          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_profile.php?user_id=$currentUserId");
 
       print(response.body);
 
       if (response.statusCode == 200) {
         _isLoading = false;
-        _users = [];
+        _users.clear();
         var extractedData = json.decode(response.body);
-        //  print(json.decode(response.body) + 'printed extrated data');
-        final List<dynamic> userDetails = extractedData['userDetails'];
-        for (var i = 0; i < userDetails.length; i++) {
+        if (extractedData is Map<String, dynamic> &&
+            extractedData.containsKey('userDetails')) {
+          final userDetails = extractedData['userDetails'];
           _users.add(
             ProfileModel(
-                firstname: userDetails[i]['firstname'].toString(),
-                lastname: userDetails[i]['lastname'].toString(),
-                email: userDetails[i]['email'].toString(),
-                gender: userDetails[i]['gender'].toString(),
-                address: userDetails[i]['address'].toString(),
-                dob: userDetails[i]['dob'].toString(),
-                phone: userDetails[i]['phone'].toString(),
-                userid: userDetails[i]['userid'].toString()
-
-
-
-               ),
+              userid: userDetails['userid'].toString(),
+              firstname: userDetails['firstname'].toString(),
+              lastname: userDetails['lastname'].toString(),
+              email: userDetails['email'].toString(),
+              phone: userDetails['phone'].toString(),
+              address: userDetails['address'].toString(),
+              image: userDetails['photo'].toString(),
+              dob: userDetails['dob'].toString(),
+              gender: userDetails['gender'].toString(),
+            ),
           );
         }
-        ;
 
         print('product details' + _users.toString());
-        _isLoading = false;
         print('products loading completed --->' + 'loading data');
         notifyListeners();
       } else {
-        _isLoading = true;
+        _isLoading = false;
         notifyListeners();
       }
     } on HttpException catch (e) {
-      // ignore: prefer_interpolation_to_compose_strings
       print('error in product prod -->>' + e.toString());
       print('Product Data is one by one loaded the product' + e.toString());
       _isLoading = false;
-
-      _isSelect = false;
       notifyListeners();
     }
   }

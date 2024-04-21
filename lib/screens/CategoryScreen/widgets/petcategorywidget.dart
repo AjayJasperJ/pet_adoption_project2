@@ -52,7 +52,7 @@ class _AllPetCategoryWidgetState extends State<AllPetCategoryWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "𓃠  ${widget.name.substring(0,16)}"
+                      "𓃠  ${widget.name}"
                     ,                        style: TextStyle(color:purpleColor,fontWeight: FontWeight.bold,),
                     ),
                     SizedBox(height: size.height*0.01),

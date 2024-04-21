@@ -45,7 +45,7 @@ class _AllOrdersWidgetState extends State<AllOrdersWidget> {
                 Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.petname.substring(0,16),style: TextStyle(color: purpleColor,fontSize: 15,fontWeight: FontWeight.bold),),
+                  Text(widget.petname,style: TextStyle(color: purpleColor,fontSize: 15,fontWeight: FontWeight.bold),),
                   SizedBox(height: size.height*0.01),
                   Text(widget.breed,style: TextStyle(fontWeight: FontWeight.w400),),
                    SizedBox(height: size.height*0.01),

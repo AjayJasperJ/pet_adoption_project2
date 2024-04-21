@@ -54,11 +54,11 @@ class FavouriteProvider extends ChangeNotifier {
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewfavpets.php?aid=$userId"),
       );
 
       print(
-            "http://campus.sicsglobal.co.in/Project/pet_shop/api/viewfavpets.php?aid=$userId");
+            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewfavpets.php?aid=$userId");
 
       print(response.body);
 
@@ -126,7 +126,7 @@ class FavouriteProvider extends ChangeNotifier {
     try {
       var response = await https.post(
           Uri.parse(
-              'http://campus.sicsglobal.co.in/Project/pet_shop/api/addfavpet.php?aid=$userid&petid=$petid'),
+              'http://campus.sicsglobal.co.in/Project/PetAdoption/api/addfavpet.php?aid=$userid&petid=$petid'),
           body: body);
 
       if (response.statusCode == 200) {
@@ -146,7 +146,7 @@ class FavouriteProvider extends ChangeNotifier {
 Future<void> deleteFav(String? favId, BuildContext context) async {
     final user = Provider.of<UserProvider>(context, listen: false);
     final url = Uri.parse(
-        'http://campus.sicsglobal.co.in/Project/pet_shop/api/delete_fav.php?fid=$favId');
+        'http://campus.sicsglobal.co.in/Project/PetAdoption/api/delete_fav.php?fid=$favId');
 
     try {
       final response = await https.delete(url);

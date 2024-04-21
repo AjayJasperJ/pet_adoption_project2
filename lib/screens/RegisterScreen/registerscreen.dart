@@ -22,7 +22,7 @@ final _formKey = GlobalKey<FormState>();
 Future<void>registerAdopter(
 
 String firstname,String lastname,String dob,String phone,String email,String password,String address,String gender) async {
-  const url = 'http://campus.sicsglobal.co.in/Project/pet_shop/api/adopter_registration.php';
+  const url = 'http://campus.sicsglobal.co.in/Project/PetAdoption/api/adopter_registration.php';
 
   Map<String, String> body = {
   

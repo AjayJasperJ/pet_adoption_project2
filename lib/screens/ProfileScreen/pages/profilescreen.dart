@@ -16,8 +16,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
    void initState() {
-    Provider.of<UserProvider>(context,listen: false).getUsertData(context: context);
+    Provider.of<UserProvider>(context,listen: false).getUserData(context: context);
     super.initState();
   }
   @override
@@ -42,25 +43,25 @@ class _ProfilePageState extends State<ProfilePage> {
   children: [
     CircleAvatar(
       backgroundColor: Color(0xff00A3FF),
-      backgroundImage: AssetImage("assets/profile.png"),
+      backgroundImage: AssetImage("assets/newprofile.png"),
       radius: 60.0,
     ),
-    Positioned(
-      right: 5,
-      bottom: 0,
-      child: Container(
-        child: Icon(Icons.camera_alt_outlined,color: Colors.black,size: 20,),
-        padding: EdgeInsets.all(7.5),
-        decoration: BoxDecoration(
-          border: Border.all(
-          width: 1,
-          color: Colors.white
-        ),
-        borderRadius: BorderRadius.circular(90.0),
-        color: Colors.grey[200]
-        )
-      )
-    )
+    // Positioned(
+    //   right: 5,
+    //   bottom: 0,
+    //   child: Container(
+    //     child: Icon(Icons.camera_alt_outlined,color: Colors.black,size: 20,),
+    //     padding: EdgeInsets.all(7.5),
+    //     decoration: BoxDecoration(
+    //       border: Border.all(
+    //       width: 1,
+    //       color: Colors.white
+    //     ),
+    //     borderRadius: BorderRadius.circular(90.0),
+    //     color: Colors.grey[200]
+    //     )
+    //   )
+    // )
   ]
 ),
           Consumer<UserProvider>(builder: (context, value, child) {
@@ -93,7 +94,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Email',style: TextStyle(fontWeight: FontWeight.w900),),
-                      Text('william@gmail.com')
+                     Consumer<UserProvider>(builder: (context, value, child) {
+                String userName = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userName = value.users[i].email;
+                }
+                return Text(
+                  userName,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      
+                      fontWeight: FontWeight.bold),
+                );
+              }),
                     ],
                   ),
                    SizedBox(height: 20),
@@ -102,7 +115,19 @@ class _ProfilePageState extends State<ProfilePage> {
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Date of Birth',style: TextStyle(fontWeight: FontWeight.w900)),
-                      Text('11/03/1999')
+                      Consumer<UserProvider>(builder: (context, value, child) {
+                String userName = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userName = value.users[i].dob;
+                }
+                return Text(
+                  userName,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      
+                      fontWeight: FontWeight.bold),
+                );
+              }),
                     ],
                   ),
                     SizedBox(height: 20),
@@ -111,7 +136,19 @@ class _ProfilePageState extends State<ProfilePage> {
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Gender',style: TextStyle(fontWeight: FontWeight.w900)),
-                      Text('Male')
+                      Consumer<UserProvider>(builder: (context, value, child) {
+                String userName = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userName = value.users[i].gender;
+                }
+                return Text(
+                  userName,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      
+                      fontWeight: FontWeight.bold),
+                );
+              }),
                     ],
                   ),
                     SizedBox(height: 20),
@@ -120,7 +157,19 @@ class _ProfilePageState extends State<ProfilePage> {
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Phone',style: TextStyle(fontWeight: FontWeight.w900)),
-                      Text('+918870120688')
+                      Consumer<UserProvider>(builder: (context, value, child) {
+                String userName = "";
+                for (var i = 0; i < value.users.length; i++) {
+                  userName = value.users[i].phone;
+                }
+                return Text(
+                  userName,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      
+                      fontWeight: FontWeight.bold),
+                );
+              }),
                     ],
                   )
                 ],

@@ -4,9 +4,10 @@ import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
 import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/pages/healthscreen.dart';
 import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/provider/healthprovider.dart';
+
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
-import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
+
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/globalsnackbar.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/productsnackbar.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 class PetDetailsScreen extends StatefulWidget {
   static const routeName = 'pets_details_screen';
   final String id;
+
   const PetDetailsScreen({super.key,required this.id});
 
   @override
@@ -33,8 +35,9 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
        final adoption=Provider.of<AdoptNowProvider>(context,listen: false);
         final favpet=Provider.of<FavouriteProvider>(context,listen: false);
         final user=Provider.of<UserProvider>(context,listen: false);
+        final health=Provider.of<HealthProvider>(context,listen: false);
       final petData =
-        Provider.of<PetProvider>(context).pets.firstWhere((element) => element.petId == widget.id);
+        Provider.of<PetProvider>(context).pets.firstWhere((element) => element.petid == widget.id);
        
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -58,7 +61,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(petData.petImage),
+              image: NetworkImage(petData.photo),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(10),
@@ -68,8 +71,8 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(petData.petName,style: const TextStyle(fontWeight: FontWeight.w900,fontSize: 18),),
-                  Text(petData.petspeciesName,style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 18),),
+                  Text(petData.name,style: const TextStyle(fontWeight: FontWeight.w900,fontSize: 18),),
+                  Text(petData.species,style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 18),),
                   
                 ],
               ),
@@ -77,13 +80,15 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                 children: [
                   Icon(LineIcons.dog,color: purpleColor),
                   SizedBox(width: size.width*0.02),
-                  Text('Breed Name :${petData.petBreed}')
+                  Text('Breed Name :${petData.breed}')
                 ],
               ),
               SizedBox(height: size.height*0.01),
               InkWell(
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder:(context)=>const HealthScreen()));
+                onTap: ()async {
+                  health.getAllHealthRecordData(petId: petData.petid);
+
+               await   Navigator.push(context,MaterialPageRoute(builder: (context)=>HealthScreen()));
                 },
                 child: Container(
                   height: 25,
@@ -113,7 +118,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Age',style: TextStyle(color:purpleColor,fontWeight: FontWeight.w900),),
-                      Text('${petData.petAge} Years',style: const TextStyle(fontWeight: FontWeight.w500),)
+                      Text('${petData.age} Years',style: const TextStyle(fontWeight: FontWeight.w500),)
                     ],
                   ),
                   ),
@@ -128,7 +133,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Gender',style: TextStyle(color:purpleColor,fontWeight: FontWeight.w900),),
-                      Text(petData.petSex,style: TextStyle(fontWeight: FontWeight.w500),)
+                      Text(petData.sex,style: TextStyle(fontWeight: FontWeight.w500),)
                     ],
                   ),
               ),
@@ -143,22 +148,22 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Weight',style: TextStyle(color:purpleColor,fontWeight: FontWeight.w900),),
-                      Text(petData.petWeight,style: const TextStyle(fontWeight: FontWeight.w500),)
+                      Text(petData.weight,style: const TextStyle(fontWeight: FontWeight.w500),)
                     ],
                   ),
               ),
                 ],
               ),
               SizedBox(height: size.height*0.02),
-              Text('Pet Color : ${petData.petcolor}',style: TextStyle(fontWeight: FontWeight.bold),),
+              Text('Pet Color : ${petData.color}',style: TextStyle(fontWeight: FontWeight.bold),),
                 SizedBox(height: size.height*0.01),
-                 Text('Pet Diet : ${petData.petdiet}',style: TextStyle(fontWeight: FontWeight.bold),),
+                 Text('Pet Diet : ${petData.diet}',style: TextStyle(fontWeight: FontWeight.bold),),
                    SizedBox(height: size.height*0.01),
-                    Text('Pet Behavoiur : ${petData.petbehaveier}',style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('Pet Behavoiur : ${petData.behaviour}',style: TextStyle(fontWeight: FontWeight.bold),),
                   SizedBox(height: size.height*0.01),       
               const Text('Description',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17),),
                SizedBox(height: size.height*0.01),
-              Text(petData.petnotes),
+              Text(petData.notes),
              SizedBox(height: size.height*0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +178,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
       ),
       child: InkWell(
         onTap: ()async{
-            favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
+            favpet.addItemToFavourites(petid: petData.petid.toString(),userid: user.currentUserId.toString());
             ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: purpleColor,
@@ -192,7 +197,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
         child: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/fav.png',height: 32,width: 32),
+            Image.asset('assets/fav.png',height: 25,width: 25),
           ],
         ))),
       // child: IconButton(
@@ -212,7 +217,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                        final provider =
                                   Provider.of<AdoptNowProvider>(context,listen: false);
                               bool isInCart = provider.orders.any(
-                                  (item) => item.petId == petData.petId);
+                                  (item) => item.petId == petData.petid);
                               if (isInCart) {
                                  ScaffoldMessenger.of(context).showSnackBar(
                                _productSnackBar.productSnackbar(context: context)
@@ -222,7 +227,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                               
                               } else {
                                  adoption.addAdoptPet(
-                                  petid: petData.petId.toString(),
+                                  petid: petData.petid.toString(),
                                   userid: user.currentUserId.toString(),
                                  );
                                
