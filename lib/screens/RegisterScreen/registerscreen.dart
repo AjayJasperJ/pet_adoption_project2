@@ -413,11 +413,7 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                  );
 
 
-                 await   Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => LoginScreen()
-                      ),
-                    );
+               
                   }  
              
                 //       await Navigator.push(context, MaterialPageRoute(builder:(context)=> LoginPage()));

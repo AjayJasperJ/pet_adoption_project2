@@ -347,6 +347,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         'address': ${addressController.text.trim()},
         'user_id': ${user.currentUserId}?? "1" """);
       if (response.statusCode == 200) {
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  backgroundColor:purpleColor,
+                                  content: const Text("Profile Updated successfully...!",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
         Navigator.push(
             context,
             MaterialPageRoute(

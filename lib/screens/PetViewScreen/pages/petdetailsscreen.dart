@@ -191,7 +191,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                             duration: const Duration(seconds: 4),
                           ), 
                         );
-         await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+       //  await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
 
         },
         child: Center(child: Column(
