@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
@@ -13,16 +14,17 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage>{
 
 final _formKey = GlobalKey<FormState>();
+  late bool _passwordVisible;
 Future<void>registerAdopter(
 
 String firstname,String lastname,String dob,String phone,String email,String password,String address,String gender) async {
-  const url = 'http://campus.sicsglobal.co.in/Project/PetAdoption/api/adopter_registration.php';
+  const url = 'http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/adopter_registration.php';
 
   Map<String, String> body = {
   
@@ -49,35 +51,44 @@ String firstname,String lastname,String dob,String phone,String email,String pas
           ScaffoldMessenger.of(context).showSnackBar(
          SnackBar(
           backgroundColor: purpleColor,
-          content: Text('Registration Successful!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-          duration: Duration(seconds: 4),
+          content: const Text('Registration Successful!',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          duration: const Duration(seconds: 4),
         ),
       );
       Navigator.push(context,MaterialPageRoute(builder:(context)=>const LoginScreen()));
       print(body);
       print("Response body${response.body}");
+            print(body);
+      print("Response body${response.body}");
+      print('Registration successful');
     
       }
-      print(body);
-      print("Response body${response.body}");
-      print('Registration successful');
-      print(body);
-      print("Response body${response.body}");
-      print('Registration successful');
-    } else {
+      else if(jsonData['status']==false){
       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(
+           SnackBar(
           backgroundColor: purpleColor,
-          content: Text('Already email and password Exists',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-          duration: Duration(seconds: 4),
+          content: const Text('User Already Exists !',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          duration: const Duration(seconds: 4),
         ),
       );
       print('Error: ${response.statusCode}');
     }
-  } catch (error) {
+    else{
+     print('Not working this api'); 
+    }
+  } 
+
+    } 
+    catch (error) {
     print('Error: $error');
   }
 }
+  // @override
+  // void initState() {
+  //   super.initState();
+  
+  // }
+  
 
 
   TextEditingController firstnamecontroller=TextEditingController();
@@ -88,6 +99,42 @@ String firstname,String lastname,String dob,String phone,String email,String pas
   TextEditingController emailcontroller=TextEditingController();
   TextEditingController addresscontroller=TextEditingController();
   var selectedGender = ''; 
+   String? errorText;
+
+  @override
+  void initState() {
+    super.initState();
+      _passwordVisible = false;
+    emailcontroller.addListener(_validateEmail);
+  }
+
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    super.dispose();
+  }
+
+  void _validateEmail() {
+  final email = emailcontroller.text;
+  if (email.isEmpty) {
+    setState(() {
+      errorText = 'Please enter your Gmail address';
+    });
+  } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$').hasMatch(email)) {
+    setState(() {
+      errorText = 'Please enter a valid Gmail address';
+    });
+  } else if (email != email.toLowerCase()) {
+    setState(() {
+      errorText = 'Email should be in lowercase';
+    });
+  } else {
+    setState(() {
+      errorText = null;
+    });
+  }
+}
+
  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -133,7 +180,7 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                       style: TextStyle(  
                         fontSize: 30.0,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     SizedBox(height: size.height * 0.03),  
@@ -250,11 +297,18 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                           ),
                         ),
                         style: const TextStyle(color: Colors.black),
-                        validator: (value) {
-                          if(value!.isEmpty){
-                            return 'Please enter your mobile no';
-                          }
-                        },
+                        inputFormatters: [
+    LengthLimitingTextInputFormatter(10), // Limits input to 10 characters
+    FilteringTextInputFormatter.digitsOnly, // Allows only digits
+  ],
+                         validator: (value) {
+    if (value!.isEmpty) {
+      return 'Please enter your phone';
+    } else if (value.length != 10) {
+      return 'Phone number must be 10 digits';
+    }
+    return null;
+  },
                        
                       ),
                     ),
@@ -273,6 +327,7 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                           ),
                           filled: true,
                           fillColor: Colors.white.withOpacity(0.5),
+                          errorText: errorText,
                           prefixIcon: const Icon(
                             IconlyLight.message,
                             color: Colors.black,
@@ -280,10 +335,15 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                         ),
                         style: const TextStyle(color: Colors.black),
                         validator: (value) {
-                          if(value!.isEmpty){
-                            return 'Please enter your email';
-                          }
-                        },
+      if (value!.isEmpty) {
+        return 'Please enter your Gmail address';
+      } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$').hasMatch(value)) {
+        return 'Please enter a valid Gmail address';
+      } else if (value != value.toLowerCase()) {
+        return 'Email should be in lowercase';
+      }
+      return null;
+    },
                          
                       ),
                       
@@ -292,6 +352,7 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                        Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextFormField(
+                        obscureText: _passwordVisible,
                          controller: passwordcontroller,
                          keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
@@ -308,14 +369,35 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                            IconlyLight.password,
                             color: Colors.black,
                           ),
-                          suffixIcon: const Icon(Icons.remove_red_eye,color: Colors.black)
+                          suffixIcon: IconButton(
+            icon: Icon(
+             
+               _passwordVisible
+               ? Icons.visibility_off
+               : Icons.visibility,
+               color: Colors.black
+               ),
+            onPressed: () {
+           
+               setState(() {
+                   _passwordVisible = !_passwordVisible;
+               });
+             },
+            ),
                         ),
                         style: const TextStyle(color: Colors.black),
-                        validator: (value) {
-                          if(value!.isEmpty){
-                            return 'Please enter your password';
-                          }
-                        },
+                       inputFormatters: [
+    LengthLimitingTextInputFormatter(8), // Limits input to 10 characters
+    FilteringTextInputFormatter.singleLineFormatter, // Allows only digits
+  ],
+                            validator: (value) {
+    if (value!.isEmpty) {
+      return 'Please enter your phone';
+    } else if (value.length != 8) {
+      return 'Password must be 8 characters';
+    }
+    return null;
+  },
                         
                       ),
                     ),
@@ -351,7 +433,7 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                     ),
                     
                     SizedBox(height: size.height * 0.03),
-                     Padding(padding: EdgeInsets.symmetric(horizontal: 20),
+                     Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
                      child: DropdownButtonFormField<String>(
                     
                        validator: (value) {
@@ -363,26 +445,26 @@ String firstname,String lastname,String dob,String phone,String email,String pas
                         
                         borderRadius: BorderRadius.circular(10.0),borderSide: BorderSide.none
                       ),
-                      prefixIcon: Icon(IconlyLight.profile,color: Colors.black,),
+                      prefixIcon: const Icon(IconlyLight.profile,color: Colors.black,),
                       fillColor: Colors.white.withOpacity(0.5),filled: true),
                   value: selectedGender,
                 
                   items: [
-                    DropdownMenuItem<String>(
+                    const DropdownMenuItem<String>(
                       
                       child: Text('Select'),
                       value: '',
                     ),
-                    DropdownMenuItem<String>(
+                    const DropdownMenuItem<String>(
                       child: Text('Male'),
                       value: 'Male',
                 
                     ),
-                    DropdownMenuItem<String>(
+                    const DropdownMenuItem<String>(
                       child: Text('Female'),
                       value: 'Female',
                     ),
-                    DropdownMenuItem<String>(
+                    const DropdownMenuItem<String>(
                       child: Text('Others'),
                       value: 'Others',
                     )

@@ -11,6 +11,9 @@ class AllPetWidget extends StatefulWidget {
   final String age;
   final String gender;
   final String species;
+  final String dob;
+  final String color;
+
  
 
   const AllPetWidget(
@@ -22,6 +25,8 @@ class AllPetWidget extends StatefulWidget {
       required this.age,
       required this.gender,
       required this.species,
+      required this.color,
+      required this.dob
     
       });
 
@@ -50,8 +55,8 @@ class _AllPetWidgetState extends State<AllPetWidget> {
               Navigator.of(context).pushNamed(PetDetailsScreen.routeName,arguments:widget.petid);
               },
               child: Container(
-                  height: 150,
-            width: 130,
+                  height: 160,
+            width: 140,
                 decoration: BoxDecoration(
                      image: DecorationImage(image: NetworkImage(widget.petImage),fit: BoxFit.cover),
                    
@@ -61,7 +66,7 @@ class _AllPetWidgetState extends State<AllPetWidget> {
             ),
           ),
           Container(
-            height: 150,
+            height: 160,
             width: 190,
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -87,7 +92,7 @@ class _AllPetWidgetState extends State<AllPetWidget> {
                   ),
                    Text(widget.gender),
                   Text(
-                    widget.species,
+                    widget.color,
                     style: TextStyle(
                       color: Colors.grey,
                     ),

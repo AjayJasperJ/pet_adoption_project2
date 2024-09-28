@@ -274,7 +274,8 @@ class _SupportScreenState extends State<SupportScreen> {
                             ElevatedButton.styleFrom(backgroundColor: purpleColor),
                         onPressed: ()async {
                         if (_formKey.currentState!.validate()) {
-                                support.addFeedback(comments: commentcontroller.toString(),userId:userData.currentUserId.toString());                        
+                                support.addFeedback(comments: commentcontroller.text.toString(),userId:userData.currentUserId.toString());
+                                print(commentcontroller.text.toString());                        
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: purpleColor,
                                   content: const Text("Feedback added successfully",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));

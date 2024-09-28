@@ -30,17 +30,17 @@ class _EventScreenState extends State<EventScreen> {
     final event=Provider.of<EventProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor:purpleColor,
-        title: Text('Events',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+        title: const Text('Events',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
       ),
     body:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: size.height*0.02),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(' Pets Events Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+          const Padding(
+            padding: EdgeInsets.only(left: 20),
+            child:  Text(' Pets Events Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
           ),
           Expanded(
             child: FadeInUp(

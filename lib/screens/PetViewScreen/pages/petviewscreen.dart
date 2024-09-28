@@ -18,8 +18,6 @@ import 'package:pet_adoption_carmel/screens/PetViewScreen/widgets/petwidget.dart
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/profilescreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/pages/supportscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
-import 'package:pet_adoption_carmel/screens/ViewEventScreen/pages/eventscreen.dart';
-
 
 import 'package:provider/provider.dart';
 
@@ -130,7 +128,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                   print(userAddress+'vvvvvvvvv');
                 }
                 return Text(
-                  '$userAddress',
+                  userAddress,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -154,7 +152,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               },
                child: ListTile(
                 leading: Icon(Icons.pets,color: purpleColor,),
-                title: Text('Categories',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                title: const Text('Categories',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ), 
            
@@ -164,25 +162,25 @@ class _PetViewScreenState extends State<PetViewScreen> {
               },
                child: ListTile(
                 leading: Icon(IconlyBold.heart,color: purpleColor,),
-                title: Text('My Favourites',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                title: const Text('My Favourites',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
-             InkWell(
-              onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder:(context)=>const EventScreen()));
-              },
-               child: ListTile(
-                leading: Icon(IconlyBold.paper,color: purpleColor,),
-                title: Text('Pet Events',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-                           ),
-             ),
+            //  InkWell(
+            //   onTap: () {
+            //     Navigator.push(context,MaterialPageRoute(builder:(context)=>const EventScreen()));
+            //   },
+            //    child: ListTile(
+            //     leading: Icon(IconlyBold.paper,color: purpleColor,),
+            //     title: const Text('Pet Events',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+            //                ),
+            //  ),
               InkWell(
               onTap: () {
                 Navigator.push(context,MaterialPageRoute(builder:(context)=>const MyOrdersScreen()));
               },
                child: ListTile(
                 leading: Icon(IconlyBold.shieldDone,color: purpleColor,),
-                title: Text('My Adoptions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                title: const Text('My Adoptions',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
              InkWell(
@@ -191,7 +189,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               },
                child: ListTile(
                 leading: Icon(IconlyBold.message,color: purpleColor,),
-                title: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
+                title: const Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                            ),
              ),
             ListTile(
@@ -224,7 +222,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => const LoginScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             'OK',
                             style: TextStyle(
                               fontSize: 14,
@@ -238,7 +236,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                             // Close the dialog
                             Navigator.of(context).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             'CANCEL',
                             style: TextStyle(
                                fontSize: 14,
@@ -271,12 +269,12 @@ class _PetViewScreenState extends State<PetViewScreen> {
                     ),
                     fillColor: Colors.white,
                     filled: true,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.search,
                      // size: 17,
                     ),
                     hintText: "Search ",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                        fontSize: 14,
                         fontWeight: FontWeight.w600),
@@ -293,9 +291,9 @@ class _PetViewScreenState extends State<PetViewScreen> {
                   },
                 ),
                SizedBox(height: size.height*0.02),
-               Text('Categories',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+               const Text('Categories',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                 SizedBox(height: size.height*0.02),
-               FadeInUp(
+               FadeInDown(
                   duration:  const Duration(milliseconds: 1500),
                  child: category.loadingSpinner
                       ? Column(
@@ -336,7 +334,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               SizedBox(
                 height: size.height*0.03,
               ),
-              Text('Popular Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+              const Text('Popular Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
               FadeInUp(
                  duration:  const Duration(milliseconds: 1500),
                 child: pet.loadingSpinner
@@ -355,10 +353,19 @@ class _PetViewScreenState extends State<PetViewScreen> {
                       )
                     : pet.pets.isEmpty
                         ? Center(
-                            child: Text(
-                            'No Pets...',
-                            style: TextStyle(color: purpleColor),
-                          )):pet.searchProducts.isEmpty&&
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: size.height*0.2),
+                               
+                                Image.asset('assets/nodog.png',height: 70,width: 70,),
+                                 SizedBox(height: size.height*0.01),
+                                Text(
+                                'No Pets Available...!',
+                                style: TextStyle(color: purpleColor,fontWeight: FontWeight.bold,fontSize: 14),
+                                                          ),
+                              ],
+                            )):pet.searchProducts.isEmpty&&
                           searchController.text.isNotEmpty?Center(
                             child: Text('No Pets Avilable',style: TextStyle(color: purpleColor),),):
                             searchController.text.isNotEmpty&&
@@ -377,6 +384,9 @@ class _PetViewScreenState extends State<PetViewScreen> {
                                   petImage: pet.searchProducts[intex].photo,
                                   gender: pet.searchProducts[intex].sex,
                                   species: pet.searchProducts[intex].species,
+                                  color: pet.searchProducts[intex].color,
+                                  dob: pet.searchProducts[intex].dob,
+
                                 );
                               },
                             ),
@@ -397,6 +407,8 @@ class _PetViewScreenState extends State<PetViewScreen> {
                                   petImage: pet.pets[intex].photo,
                                   gender: pet.pets[intex].sex,
                                   species: pet.pets[intex].species,
+                                  color: pet.pets[intex].color,
+                                  dob: pet.pets[intex].dob,
                                 );
                               },
                             ),

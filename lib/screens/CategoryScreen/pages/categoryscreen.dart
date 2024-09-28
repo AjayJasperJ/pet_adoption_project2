@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
+import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigationscreen.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/provider/categoryprovider.dart';
 import 'package:pet_adoption_carmel/screens/CategoryScreen/widgets/categorywidget.dart';
 
@@ -32,7 +33,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         appBar: AppBar(
         
         leading:  IconButton(onPressed: (){
-          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const PetBottomNavigation()));
         // ignore: prefer_const_constructors
         },icon: Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: purpleColor,
@@ -46,7 +47,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           children: [
      Text('Category Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
             SizedBox(height: size.height*0.02),
-            FadeInUp(
+            FadeInDown(
                duration:  const Duration(milliseconds: 1500),
               child: category.loadingSpinner
                             ? const Column(
@@ -77,7 +78,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                       // childAspectRatio: 0.98,
+                        childAspectRatio: 0.98,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
                       ),

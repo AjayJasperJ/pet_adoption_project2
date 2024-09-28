@@ -50,11 +50,11 @@ class PetProvider with ChangeNotifier {
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewallpets.php"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/viewallpets.php"),
       );
 
       print(
-          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/viewallpets.php");
+          "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/viewallpets.php");
 
       print(response.body);
 
@@ -115,11 +115,11 @@ class PetProvider with ChangeNotifier {
     _isLoading = true;
     var response = await https.get(
       Uri.parse(
-          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/search_pet.php?keyword=$value"),
+          "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/search_pet.php?keyword=$value"),
     );
 
     print(
-        "http://campus.sicsglobal.co.in/Project/PetAdoption/api/search_pet.php?keyword=$value");
+        "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/search_pet.php?keyword=$value");
 
     if (response.statusCode == 200) {
       var responseBody = response.body;

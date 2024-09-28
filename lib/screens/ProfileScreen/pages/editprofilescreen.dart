@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
@@ -20,8 +18,45 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   TextEditingController userNameController = TextEditingController();
+  TextEditingController lastnameCOntroller=TextEditingController();
+  TextEditingController datecontroller =TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController emailController=TextEditingController();
+   final _formKey = GlobalKey<FormState>();
+
+    @override
+  void initState() {
+    super.initState();
+    
+    // Fetch user data and initialize controllers
+    final user = Provider.of<UserProvider>(context, listen: false).currentUserId;
+    
+    if (user != null) {
+      userNameController.text =  'Vishal';
+      lastnameCOntroller.text =  'Vichu';
+      datecontroller.text =  '29-11-1999';  // Ensure the DOB is in the correct format
+      phoneNumberController.text = '8870120688';
+      addressController.text = 'Kanyakumari';
+      emailController.text ='vishal@gmail.com';
+    }
+  }
+   Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      // Format the date and set it in the TextField
+      String formattedDate = "${picked.day}-${picked.month}-${picked.year}";
+  
+      datecontroller.text = formattedDate;
+    }
+  }
+
   File? image;
   Future pickImage() async {
     try {
@@ -45,8 +80,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: 70,
-          title: Text('Edit Profile',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
-          iconTheme: IconThemeData(color: Colors.white),
+          title: const Text('Edit Profile',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+          iconTheme: const IconThemeData(color: Colors.white),
           elevation: 0,
           backgroundColor: purpleColor,
           leading: IconButton(
@@ -62,168 +97,290 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Profile',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
+            child: Form(
+              key:_formKey ,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Profile',
+                        style:
+                            TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
+                      ),
+                    //  imageProfile()
+                      // SizedBox(
+                      //   child: CircleAvatar(
+                      //     radius: 40.0,
+                      //     backgroundColor: Colors.white,
+                      //     child: CircleAvatar(
+                      //       child: Align(
+                      //         alignment: Alignment.bottomRight,
+                      //         child: CircleAvatar(
+                      //           backgroundColor: Colors.black,
+                      //           radius: 12.0,
+                      //           child: Icon(
+                      //             Icons.camera_alt,
+                      //             size: 15.0,
+                      //             color: Colors.white,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       radius: 30,
+                      //       backgroundImage: AssetImage('assets/profile.png'),
+                      //     ),
+                      //   ),
+                      // ),
+                      // CircleAvatar(
+                      //   radius: 30,
+                      //   child: Image.asset('assets/profile.png'),
+                      // ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  const Text(
+                    'First Name',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+              
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: userNameController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter First Name',
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(userNameController.text.isEmpty){
+                              return "Please enter your firstname";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
                     ),
-                    imageProfile()
-                    // SizedBox(
-                    //   child: CircleAvatar(
-                    //     radius: 40.0,
-                    //     backgroundColor: Colors.white,
-                    //     child: CircleAvatar(
-                    //       child: Align(
-                    //         alignment: Alignment.bottomRight,
-                    //         child: CircleAvatar(
-                    //           backgroundColor: Colors.black,
-                    //           radius: 12.0,
-                    //           child: Icon(
-                    //             Icons.camera_alt,
-                    //             size: 15.0,
-                    //             color: Colors.white,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       radius: 30,
-                    //       backgroundImage: AssetImage('assets/profile.png'),
-                    //     ),
-                    //   ),
-                    // ),
-                    // CircleAvatar(
-                    //   radius: 30,
-                    //   child: Image.asset('assets/profile.png'),
-                    // ),
-                  ],
-                ),
-                SizedBox(
-                  height: size.height * 0.04,
-                ),
-                const Text(
-                  'User Name',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-
-                SizedBox(height: size.height * 0.01),
-                SizedBox(
-                  height: size.height * 0.07,
-                  child: TextFormField(
-                    controller: userNameController,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                        hintText: 'Enter User Name',
-                        hintStyle: TextStyle(fontSize: 13),
-                        border: OutlineInputBorder()),
                   ),
-                ),
-                SizedBox(height: size.height * 0.01),
-                const Text(
-                  'Phone Number',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                // SizedBox(
-                //   width: size.width * 0.01,
-                // ),
-
-                SizedBox(height: size.height * 0.01),
-                SizedBox(
-                  height: size.height * 0.07,
-                  child: TextFormField(
-                    controller: phoneNumberController,
-                    keyboardType: TextInputType.phone,
-                    decoration: const InputDecoration(
-                        hintText: 'Enter Phone Number',
-                        hintStyle: TextStyle(fontSize: 13),
-                        border: OutlineInputBorder()),
+                  SizedBox(height: size.height * 0.01),
+                   const Text(
+                    'Last Name',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
                   ),
-                ),
-                SizedBox(height: size.height * 0.01),
-                const Text(
-                  'Address',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-
-                SizedBox(height: size.height * 0.01),
-                SizedBox(
-                  height: size.height * 0.07,
-                  child: TextFormField(
-                    controller: addressController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        hintText: 'Enter  Address',
-                        hintStyle: TextStyle(fontSize: 13),
-                        border: OutlineInputBorder()),
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: lastnameCOntroller,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter Last Name',
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(lastnameCOntroller.text.isEmpty){
+                              return "Please enter your lastname";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                    ),
                   ),
-                ),
+                     SizedBox(height: size.height * 0.01),
+                  const Text(
+                    'Phone Number',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                  // SizedBox(
+                  //   width: size.width * 0.01,
+                  // ),
+              
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter Phone Number',
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(phoneNumberController.text.isEmpty){
+                              return "Please enter your phone";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                   const Text(
+                    'Date of Birth',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+              
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: datecontroller,
+                      
+                      keyboardType: TextInputType.text,
+                      decoration:  InputDecoration(
+                       
+                          hintText: 'Enter Date of birth',
+                          prefixIcon: IconButton(onPressed: (){
+                            _selectDate(context);
+              
+                          }, icon:Icon(IconlyLight.calendar)),
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(datecontroller.text.isEmpty){
+                              return "Please enter your dob";
+              
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                         
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  const Text(
+                    'Address',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+              
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: addressController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter  Address',
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(addressController.text.isEmpty){
+                              return "Please enter your address";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                    ),
+                  ),
+                   SizedBox(height: size.height * 0.01),
+                  const Text(
+                    'Email',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+              
+                   SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter  Email',
+                          hintStyle: TextStyle(fontSize: 13),
+                          border: OutlineInputBorder()),
+                          validator: (value) {
+                            if(emailController.text.isEmpty){
+                              return "Please enter your email";
+                            }
+                            else{
+                              return null;
+                            }
+                          },
+                    ),
+                  ),
+                   SizedBox(height: size.height * 0.01),
+                  
+                 
+                  // const Text(
+                  //   'Sponser ID ',
+                  //   style: TextStyle(
+                  //       color: Colors.black, fontWeight: FontWeight.w500),
+                  // ),
+                  // SizedBox(height: size.height * 0.01),
+                  // SizedBox(
+                  //   height: size.height * 0.07,
+                  //   child: TextFormField(
+                  //     //controller: emailController,
+                  //     keyboardType: TextInputType.text,
+                  //     decoration: const InputDecoration(
+                  //         hintText: 'Enter Sponser ID',
+                  //         hintStyle: TextStyle(fontSize: 13),
+                  //         border: OutlineInputBorder()),
+                  //   ),
+                  // ),
+                  // const Text(
+                  //   'Sponser link',
+                  //   style: TextStyle(
+                  //       color: Colors.black, fontWeight: FontWeight.w500),
+                  // ),
+              
+                  // SizedBox(height: size.height * 0.01),
+                  // SizedBox(
+                  //   height: size.height * 0.07,
+                  //   child: TextFormField(
+                  //     //controller: emailController,
+                  //     keyboardType: TextInputType.emailAddress,
+                  //     decoration: const InputDecoration(
+                  //         hintText: 'Enter Sponser link',
+                  //         hintStyle: TextStyle(fontSize: 13),
+                  //         border: OutlineInputBorder()),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  // Spacer(),
+                  // SizedBox(
+                  //   height: size.height * 0.39,
+                  // ),
+                  SizedBox(
+                    height: size.height * 0.049,
+                    width: size.width * 0.93,
+                    child: ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(backgroundColor:purpleColor),
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()){
+                              updateProfileApi();
 
-                SizedBox(height: size.height * 0.01),
-                // const Text(
-                //   'Sponser ID ',
-                //   style: TextStyle(
-                //       color: Colors.black, fontWeight: FontWeight.w500),
-                // ),
-                // SizedBox(height: size.height * 0.01),
-                // SizedBox(
-                //   height: size.height * 0.07,
-                //   child: TextFormField(
-                //     //controller: emailController,
-                //     keyboardType: TextInputType.text,
-                //     decoration: const InputDecoration(
-                //         hintText: 'Enter Sponser ID',
-                //         hintStyle: TextStyle(fontSize: 13),
-                //         border: OutlineInputBorder()),
-                //   ),
-                // ),
-                // const Text(
-                //   'Sponser link',
-                //   style: TextStyle(
-                //       color: Colors.black, fontWeight: FontWeight.w500),
-                // ),
+                          }
+                          
 
-                // SizedBox(height: size.height * 0.01),
-                // SizedBox(
-                //   height: size.height * 0.07,
-                //   child: TextFormField(
-                //     //controller: emailController,
-                //     keyboardType: TextInputType.emailAddress,
-                //     decoration: const InputDecoration(
-                //         hintText: 'Enter Sponser link',
-                //         hintStyle: TextStyle(fontSize: 13),
-                //         border: OutlineInputBorder()),
-                //   ),
-                // ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                // Spacer(),
-                // SizedBox(
-                //   height: size.height * 0.39,
-                // ),
-                SizedBox(
-                  height: size.height * 0.049,
-                  width: size.width * 0.93,
-                  child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor:purpleColor),
-                      onPressed: () {
-                        updateProfileApi();
-                      },
-                      child: const Text(
-                        'Update',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
-                )
-              ],
+                        
+                        },
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -323,10 +480,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           'http://campus.sicsglobal.co.in/Project/PetAdoption/api/edit_profile.php');
       request.fields.addAll({
         'firstname': userNameController.text.trim(),
-        'lastname':'mm',
+        'lastname':lastnameCOntroller.text.trim(),
         'phone': phoneNumberController.text.trim(),
-        'email': 'athira@gmail.com',
-        'dob':'29-11-1999',
+        'email': emailController.text.trim(),
+        'dob':datecontroller.text.trim(),
         'password': '123',
         'gender':'Male',
         'address': addressController.text.trim(),
@@ -339,14 +496,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
       print(await response.stream.bytesToString());
       print(""" 'firstname': ${userNameController.text.trim()},
-       'lastname':'mm',
+       'lastname':${lastnameCOntroller.text.trim()},
         'phone': ${phoneNumberController.text.trim()},
         'email': 'jose@gmail.com',
         'password': '123',
         'gender':'Male',
         'address': ${addressController.text.trim()},
         'user_id': ${user.currentUserId}?? "1" """);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200) { 
+         
+          
          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor:purpleColor,
                                   content: const Text("Profile Updated successfully...!",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)));
@@ -354,9 +513,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => const PetBottomNavigation()));
+                         
+                        
+        
 
         print(await response.stream.bytesToString());
-      } else {
+      } else { 
         print(response.reasonPhrase);
       }
     } catch (e) {

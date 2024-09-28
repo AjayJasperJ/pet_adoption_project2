@@ -46,11 +46,11 @@ class HealthProvider extends ChangeNotifier {
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_health_reports.php?pet_id=$petId"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_health_reports.php?pet_id=$petId"),
       );
 
       print(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_health_reports.php?pet_id=$petId");
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_health_reports.php?pet_id=$petId");
 
       print(response.body);
 

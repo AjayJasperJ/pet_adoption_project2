@@ -44,11 +44,11 @@ class AdoptNowProvider extends ChangeNotifier {
       // var headers = {'Cookie': 'ci_session=c7lis868nec6nl8r1lb5el72q8n26upv'};
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_adoption_status.php?user_id=$userid"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_adoption_status.php?user_id=$userid"),
       );
 
       print(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_adoption_status.php?user_id=$userid");
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_adoption_status.php?user_id=$userid");
 
       print(response.body);
 

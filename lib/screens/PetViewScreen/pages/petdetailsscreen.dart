@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
-import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/pages/healthscreen.dart';
+import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigationscreen.dart';
 import 'package:pet_adoption_carmel/screens/HealthRecordsScreen/provider/healthprovider.dart';
-
-import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/petfavoutitescreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
-
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/globalsnackbar.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/productsnackbar.dart';
 import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
-
 import 'package:provider/provider.dart';
+
 class PetDetailsScreen extends StatefulWidget {
   static const routeName = 'pets_details_screen';
   final String id;
@@ -28,10 +25,10 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
    bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
-  GlobalSnackBar _snackBar =GlobalSnackBar();
-  ProductSnackBar _productSnackBar=ProductSnackBar();
+  GlobalSnackBar snackBar =GlobalSnackBar();
+  ProductSnackBar productSnackBar=ProductSnackBar();
     final size=MediaQuery.of(context).size;
-       final pets = Provider.of<PetProvider>(context,listen: false);
+      // final pets = Provider.of<PetProvider>(context,listen: false);
        final adoption=Provider.of<AdoptNowProvider>(context,listen: false);
         final favpet=Provider.of<FavouriteProvider>(context,listen: false);
         final user=Provider.of<UserProvider>(context,listen: false);
@@ -43,7 +40,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-         Navigator.pop(context); 
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>PetBottomNavigation()));
         }, icon:const Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: purpleColor,
         title: const Text('Pet Details',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
@@ -72,10 +69,11 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(petData.name,style: const TextStyle(fontWeight: FontWeight.w900,fontSize: 18),),
-                  Text(petData.species,style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 18),),
+                  Text('Color : ${petData.color}',style: TextStyle(color: purpleColor,fontWeight: FontWeight.w900,fontSize: 16),),
                   
                 ],
               ),
+              SizedBox(height: size.height*0.02),
               Row(
                 children: [
                   Icon(LineIcons.dog,color: purpleColor),
@@ -84,25 +82,25 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                 ],
               ),
               SizedBox(height: size.height*0.01),
-              InkWell(
-                onTap: ()async {
-                  health.getAllHealthRecordData(petId: petData.petid);
+              // InkWell(
+              //   onTap: ()async {
+              //     health.getAllHealthRecordData(petId: petData.petid);
 
-               await   Navigator.push(context,MaterialPageRoute(builder: (context)=>HealthScreen()));
-                },
-                child: Container(
-                  height: 25,
-                  width: 120,
+              //  await   Navigator.push(context,MaterialPageRoute(builder: (context)=>const HealthScreen()));
+              //   },
+              //   child: Container(
+              //     height: 25,
+              //     width: 120,
                  
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: purpleColor,),
-                  child: Center(child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.favorite,color: Colors.white,size: 12,),
-                      Text('Health Rocords',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 10),),
-                    ],
-                  ))),
-              ),
+              //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: purpleColor,),
+              //     child: const Center(child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         Icon(Icons.favorite,color: Colors.white,size: 12,),
+              //         Text('Health Rocords',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 10),),
+              //       ],
+              //     ))),
+              // ),
              SizedBox(height: size.height*0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +131,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Gender',style: TextStyle(color:purpleColor,fontWeight: FontWeight.w900),),
-                      Text(petData.sex,style: TextStyle(fontWeight: FontWeight.w500),)
+                      Text(petData.sex,style: const TextStyle(fontWeight: FontWeight.w500),)
                     ],
                   ),
               ),
@@ -155,11 +153,11 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                 ],
               ),
               SizedBox(height: size.height*0.02),
-              Text('Pet Color : ${petData.color}',style: TextStyle(fontWeight: FontWeight.bold),),
+              Text('Pet Color : ${petData.color}',style: const TextStyle(fontWeight: FontWeight.bold),),
                 SizedBox(height: size.height*0.01),
-                 Text('Pet Diet : ${petData.diet}',style: TextStyle(fontWeight: FontWeight.bold),),
+                 Text('Pet Diet : ${petData.diet}',style: const TextStyle(fontWeight: FontWeight.bold),),
                    SizedBox(height: size.height*0.01),
-                    Text('Pet Behavoiur : ${petData.behaviour}',style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('Pet Behavoiur : ${petData.behaviour}',style: const TextStyle(fontWeight: FontWeight.bold),),
                   SizedBox(height: size.height*0.01),       
               const Text('Description',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17),),
                SizedBox(height: size.height*0.01),
@@ -177,29 +175,94 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
         border: Border.all(color: purpleColor),
       ),
       child: InkWell(
-        onTap: ()async{
-            favpet.addItemToFavourites(petid: petData.petid.toString(),userid: user.currentUserId.toString());
-            ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: purpleColor,
-                            content: const Text(
-                              'Pet added to Favourite Succcessfully !',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            duration: const Duration(seconds: 4),
-                          ), 
-                        );
-       //  await Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+  onTap: () async {
+    setState(() {
+      isFavorite = !isFavorite;
+      
+      if (isFavorite) {
+        // Add the pet to the favorites
+        favpet.addItemToFavourites(
+          petid: petData.petid.toString(),
+          userid: user.currentUserId.toString(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: purpleColor,
+            content: const Text(
+              'Pet added to Favourite Successfully!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      } else {
+        favpet.deleteFav(petData.petid, context);
+        // Remove the pet from the favorites
+        // favpet.removeItemFromFavourites(
+        //   petid: petData.petid.toString(),
+        //   userid: user.currentUserId.toString(),
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: purpleColor,
+            content: const Text(
+              'Pet removed from Favourites!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      }
+    });
+  },
+  child: Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          isFavorite ? Icons.favorite : Icons.favorite_border,
+          color: Colors.red,
+        ),
+      ],
+    ),
+  ),
+)
 
-        },
-        child: Center(child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/fav.png',height: 25,width: 25),
-          ],
-        ))),
+      // child: InkWell(
+      //   onTap: ()async{
+      //     setState(() {
+      //       isFavorite=!isFavorite;
+      //        favpet.addItemToFavourites(petid: petData.petid.toString(),userid: user.currentUserId.toString());
+      //       ScaffoldMessenger.of(context).showSnackBar(
+      //                     SnackBar(
+      //                       backgroundColor: purpleColor,
+      //                       content: const Text(
+      //                         'Pet added to Favourite Succcessfully !',
+      //                         style: TextStyle(
+      //                             color: Colors.white,
+      //                             fontWeight: FontWeight.bold),
+      //                       ),
+      //                       duration: const Duration(seconds: 4),
+      //                     ), 
+      //                   );
+      // // Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetFavouritePage()));
+      //     });
+           
+
+      //   },
+      //   child: Center(child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Icon(isFavorite?Icons.favorite:Icons.favorite_border,color: Colors.red)
+      //       // Image.asset('assets/fav.png',height: 25,width: 25),
+      //     ],
+      //   ))),
       // child: IconButton(
       //   onPressed: ()async {
       //    favpet.addItemToFavourites(petid: petData.petId.toString(),userid: user.currentUserId.toString());
@@ -220,7 +283,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                                   (item) => item.petId == petData.petid);
                               if (isInCart) {
                                  ScaffoldMessenger.of(context).showSnackBar(
-                               _productSnackBar.productSnackbar(context: context)
+                               productSnackBar.productSnackbar(context: context)
                               
                               );
                             
@@ -232,7 +295,7 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                                  );
                                
                               ScaffoldMessenger.of(context).showSnackBar(
-                               _snackBar.customSnackbar(context: context)
+                               snackBar.customSnackbar(context: context)
                                
                               );
                              

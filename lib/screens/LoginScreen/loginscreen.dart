@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigationscreen.dart';
@@ -16,18 +17,56 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  
   bool rememberMe = true;
   bool loading = false;
   late bool _passwordVisible;
+
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? errorText;
+    @override
+  void initState() {
+    super.initState();
+      _passwordVisible = false;
+    emailcontroller.addListener(_validateEmail);
+  }
 
-  void loginAdopter(String email, String password) async {
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    super.dispose();
+  }
+
+  void _validateEmail() {
+  final email = emailcontroller.text;
+  if (email.isEmpty) {
+    setState(() {
+      errorText = 'Please enter your Gmail address';
+    });
+  } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$').hasMatch(email)) {
+    setState(() {
+      errorText = 'Please enter a valid Gmail address';
+    });
+  } else if (email != email.toLowerCase()) {
+    setState(() {
+      errorText = 'Email should be in lowercase';
+    });
+  } else {
+    setState(() {
+      errorText = null;
+    });
+  }
+}
+
+  
+ Future<void> loginAdopter(String email, String password) async {
     print(email);
     print(password);
     const url =
-        'http://campus.sicsglobal.co.in/Project/PetAdoption/api/login.php';
+        'http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/login.php';
 
     Map<String, String> body = {'email': email, 'password': password};
 
@@ -98,11 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
       print('Error: $error');
     }
   }
-  @override
-  void initState() {
-    super.initState();
-    _passwordVisible = false;
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
           body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/logoimage.jpg'),
+                    image: AssetImage('assets/d.jpeg'),
                     fit: BoxFit.cover)),
             child: Center(
               child: SingleChildScrollView(
@@ -173,13 +209,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none)),
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your phone number';
-                            }
-                            else{
-                              return null;
-                            }
-                          },
+      if (value!.isEmpty) {
+        return 'Please enter your Gmail address';
+      } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@gmail\.com$').hasMatch(value)) {
+        return 'Please enter a valid Gmail address';
+      } else if (value != value.toLowerCase()) {
+        return 'Email should be in lowercase';
+      }
+      return null;
+    },
                         ),
                         SizedBox(height: size.height * 0.03),
                         const Text(
@@ -189,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: size.height * 0.01),
                         TextFormField(
-                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                          style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                           obscureText: _passwordVisible,
                           controller: passwordcontroller,
                           keyboardType: TextInputType.text,
@@ -202,8 +240,8 @@ class _LoginScreenState extends State<LoginScreen> {
             icon: Icon(
              
                _passwordVisible
-               ? Icons.visibility
-               : Icons.visibility_off,
+               ? Icons.visibility_off
+               : Icons.visibility,
                color: Colors.grey[400]
                ),
             onPressed: () {
@@ -219,14 +257,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none)),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            else{
-                              return null;
-                            }
-                          },
+                           inputFormatters: [
+    LengthLimitingTextInputFormatter(8), // Limits input to 10 characters
+    FilteringTextInputFormatter.singleLineFormatter, // Allows only digits
+  ],
+                            validator: (value) {
+    if (value!.isEmpty) {
+      return 'Please enter your phone';
+    } else if (value.length != 8) {
+      return 'Password must be 8 characters';
+    }
+    return null;
+  },
                         ),
                         SizedBox(
                           height: size.height * 0.02,

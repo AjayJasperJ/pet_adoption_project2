@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
+import 'package:pet_adoption_carmel/screens/BottomNavigationScreen/bottomnavigationscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/pages/favouriteemptyscreen.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/widgets/petfavwidget.dart';
@@ -35,13 +36,13 @@ class _PetFavouritePageState extends State<PetFavouritePage> {
         appBar: AppBar(
       
         leading:  IconButton(onPressed: (){
-          Navigator.pop(context);
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetBottomNavigation()));
         // ignore: prefer_const_constructors
         },icon: Icon(Icons.arrow_back,color: Colors.white,)),
         backgroundColor: purpleColor,
         title: const Text('Favouitres',style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
       ),
-    body:FadeInUp(
+    body:FadeInLeft(
        duration:  const Duration(milliseconds: 1500),
       child: favpet.loadingSpinner
                     ? const Column(
@@ -67,7 +68,7 @@ class _PetFavouritePageState extends State<PetFavouritePage> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.98,
+                childAspectRatio: 0.75,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),

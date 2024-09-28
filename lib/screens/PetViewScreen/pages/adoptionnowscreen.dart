@@ -29,7 +29,7 @@ class _AdoptionNowScreenState extends State<AdoptionNowScreen> {
             onPressed: (){
            Navigator.push(context,MaterialPageRoute(builder: (context)=>const PetBottomNavigation()));
 
-            }, child: Text('OK',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),))
+            }, child: const Text('OK',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),))
         
 
         ],

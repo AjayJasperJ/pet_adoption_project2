@@ -47,7 +47,7 @@ class _PetCategoryScreenState extends State<PetCategoryScreen> {
             child: Text('Category Pets Nears You',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
           ),
           Expanded(
-            child: FadeInUp(
+            child: FadeOutUp(
                duration:  const Duration(milliseconds: 1500),
               child: petcategory.loadingSpinner
                           ? Column(
@@ -68,13 +68,14 @@ class _PetCategoryScreenState extends State<PetCategoryScreen> {
                               : SizedBox(
                                 //  height: size.height * 0.6,
                                   child: GridView.builder(
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 0.93),
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 0.75),
                                     scrollDirection: Axis.vertical,
                                     itemCount: petcategory.petcategory.length,
                                     itemBuilder: (context, intex) {
                                       return AllPetCategoryWidget(
                                          id: petcategory.petcategory[intex].petid,
                                          name: petcategory.petcategory[intex].name,
+                                         breed: petcategory.petcategory[intex].breed,
                                          image: petcategory.petcategory[intex].photo,
                                       
                                       );

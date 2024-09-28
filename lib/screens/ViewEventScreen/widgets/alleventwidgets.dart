@@ -73,7 +73,7 @@ class _AllEventsWidgetState extends State<AllEventsWidget> {
           child: Card(
             color: Colors.grey[200],
             elevation:7,
-            shape:RoundedRectangleBorder(borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20),topLeft: Radius.circular(20)),side:BorderSide(color:Colors.green,width: 0)),
+            shape:const RoundedRectangleBorder(borderRadius:BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20),topLeft: Radius.circular(20)),side:BorderSide(color:Colors.green,width: 0)),
             margin: const EdgeInsets.all(19),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

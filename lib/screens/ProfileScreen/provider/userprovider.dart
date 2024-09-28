@@ -26,11 +26,11 @@ class UserProvider with ChangeNotifier {
       _isLoading = true;
       var response = await https.get(
         Uri.parse(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_profile.php?user_id=$currentUserId"),
+            "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_profile.php?user_id=$currentUserId"),
       );
 
       print(
-          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_profile.php?user_id=$currentUserId");
+          "http://campus.sicsglobal.co.in/Project/PetAdoption_New/api/view_profile.php?user_id=$currentUserId");
 
       print(response.body);
 

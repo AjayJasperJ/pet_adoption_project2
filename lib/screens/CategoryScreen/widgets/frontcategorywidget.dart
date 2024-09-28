@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adoption_carmel/screens/CategoryScreen/pages/petcategoryscreen.dart';
 
 
 class FrontCategoryWidegt extends StatefulWidget {
@@ -15,16 +16,22 @@ class _FrontCategoryWidegtState extends State<FrontCategoryWidegt> {
   Widget build(BuildContext context) {
     return  Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-                      height: 120,
-                      width: 90,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: NetworkImage(widget.image),fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(10),
-                      
+      child: InkWell(
+        onTap: () {
+           Navigator.of(context)
+                .pushNamed(PetCategoryScreen.routeName ,arguments:widget.id);
+        },
+        child: Container(
+                        height: 120,
+                        width: 90,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(widget.image),fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(10),
+                        
+                        ),
+                        
                       ),
-                      
-                    ),
+      ),
     );
-  }
+  } 
 }

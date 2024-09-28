@@ -5,15 +5,15 @@ import 'package:pet_adoption_carmel/screens/PetViewScreen/provider/petprovider.d
 
 
 
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart'; 
 
 
 class AllPetScreen extends StatefulWidget {
   static const routeName = 'all_pet_screen';
 
   const AllPetScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AllPetScreen> createState() => _AllPetScreenState();
@@ -40,7 +40,7 @@ class _AllPetScreenState extends State<AllPetScreen> {
           toolbarHeight: 80,
           elevation: 0,
           backgroundColor: Colors.grey[200],
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(

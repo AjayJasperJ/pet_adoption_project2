@@ -13,12 +13,12 @@ class GlobalSnackBar {
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 70,
             child: Row(
               children: [
-                const Text(
-                  'Adop a Pet Successfully',
+                Text(
+                  'Adopt a Pet Successfully',
                   style: TextStyle(color: Colors.white, fontSize: 14,fontWeight: FontWeight.bold),
                 ),
              
@@ -53,7 +53,7 @@ class GlobalSnackBar {
                         //   Icons.shopping_bag_rounded,
                         //   color: Colors.white,
                         // ),
-                        Text('VIEW PETS',
+                        const Text('VIEW PETS',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/provider/petfavprovider.dart';
+import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/petdetailsscreen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -38,7 +39,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
       padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 10),
       child: GestureDetector(
         onTap: () {
-        //  Navigator.of(context).pushNamed(GardenDetailsPage.routeName,arguments:widget.packageid);
+         Navigator.of(context).pushNamed(PetDetailsScreen.routeName,arguments:widget.id);
            // Navigator.of(context).pushNamed(GardenDetailsScreen.routeName,arguments:widget.packageid);
         },
         child: Card(
@@ -52,7 +53,7 @@ class _AllFavouriteWidgetState extends State<AllFavouriteWidget > {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(                                               
-                height: size.height*0.15,
+                height: size.height*0.2,
                 alignment: Alignment.topRight,
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),

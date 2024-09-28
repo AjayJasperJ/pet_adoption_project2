@@ -17,7 +17,7 @@ class ProductSnackBar {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/newdog1.png',height: 35,width: 35,),
+                Image.asset('assets/newdog1.png',height: 35,width: 35),
                 const SizedBox(width: 20),
                 const Text(
                   'Pet Already in Adoption List',
