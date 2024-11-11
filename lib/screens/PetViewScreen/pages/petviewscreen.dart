@@ -207,7 +207,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text(
+                      title: const Text( 
                         'Logout',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),

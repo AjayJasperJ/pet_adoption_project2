@@ -4,7 +4,6 @@ import 'package:pet_adoption_carmel/Helpers/Colors/colors.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/pages/adoptionemptyscreen.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/provider/adoptionprovider.dart';
 import 'package:pet_adoption_carmel/screens/AdoptionScreen/widgets/orderwidget.dart';
-import 'package:pet_adoption_carmel/screens/PetViewScreen/pages/adoptionnowscreen.dart';
 import 'package:pet_adoption_carmel/screens/ProfileScreen/provider/userprovider.dart';
 
 import 'package:provider/provider.dart';

@@ -2,15 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
-import 'package:pet_adoption_carmel/screens/PetFavouriteScreen/models/petfavmodel.dart';
 import 'package:pet_adoption_carmel/screens/ViewEventScreen/model/eventmodel.dart';
 
-
-
-
-
 class EventProvider extends ChangeNotifier {
- 
   bool _isLoading = false;
   bool get islOading {
     return _isLoading;
@@ -32,7 +26,7 @@ class EventProvider extends ChangeNotifier {
   bool get isError {
     return _isError;
   }
- 
+
   List<EventModel> _events = [];
   List<EventModel> get events {
     return [..._events];
@@ -48,7 +42,7 @@ class EventProvider extends ChangeNotifier {
       );
 
       print(
-            "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_events.php");
+          "http://campus.sicsglobal.co.in/Project/PetAdoption/api/view_events.php");
 
       print(response.body);
 
@@ -62,22 +56,16 @@ class EventProvider extends ChangeNotifier {
           _events.add(
             EventModel(
               id: eventDetails[i]['id'].toString(),
-              eventName:eventDetails[i]['eventName'].toString(),
+              eventName: eventDetails[i]['eventName'].toString(),
               eventDate: eventDetails[i]['eventDate'].toString(),
               eventTime: eventDetails[i]['eventTime'].toString(),
               eventLocation: eventDetails[i]['eventLocation'].toString(),
               description: eventDetails[i]['description'].toString(),
-              registrationDeadline: eventDetails[i]['registrationDeadline'].toString(),
+              registrationDeadline:
+                  eventDetails[i]['registrationDeadline'].toString(),
               organizerName: eventDetails[i]['organizerName'].toString(),
               organizerEmail: eventDetails[i]['organizerEmail'].toString(),
               organizerPhone: eventDetails[i]['organizerPhone'].toString(),
-
-
-            
-            
-            
-             
-              
             ),
           );
         }
@@ -101,12 +89,4 @@ class EventProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
- 
- 
-
-
- 
 }
-
-
- 
